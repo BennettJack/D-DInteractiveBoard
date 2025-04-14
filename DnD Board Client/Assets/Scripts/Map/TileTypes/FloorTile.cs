@@ -1,7 +1,9 @@
+using Map.TileTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class FloorTile : Tile
+
+public class FloorTile : CustomTileBase
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

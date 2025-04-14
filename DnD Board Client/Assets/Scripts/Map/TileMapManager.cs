@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Map.TileTypes;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -86,7 +87,7 @@ public class TileMapManager : MonoBehaviour
             {
                 tileMap.Value.transform.position = position;
             }
-            else if (SceneManager.GetActiveScene().buildIndex == 0 && tileMap.Key.Equals("preview"))
+            else if (SceneManager.GetActiveScene().buildIndex == 1 && tileMap.Key.Equals("preview"))
             {
                 tileMap.Value.transform.position = position;
             }
@@ -114,11 +115,10 @@ public class TileMapManager : MonoBehaviour
 
     public void PlaceWallTile(Vector3Int position, WallTile.WallType type)
     {
-        tileMaps["wall"].GetComponent<Tilemap>().SetTile(position, Resources.Load<WallTile>("Tiles/WallTiles/WallTile"));
+        tileMaps["wall"].GetComponent<Tilemap>().SetTile(position, _tileGallery.GetTile("WallTile"));
         tileMaps["wall"].GetComponent<Tilemap>().SetTileFlags(position, TileFlags.None);
         tileMaps["wall"].GetComponent<Tilemap>().SetColor(position, Color.blue);
         tileMaps["wall"].GetComponent<Tilemap>().GetTile<WallTile>(position).SetWallType(type);
-        //tileMaps["wall"].GetComponent<Tilemap>().GetTile<WallTile>(position).position = position;
 
     }
     private void CreateNewTileSet(string tileSetName, int vTileCount, int hTileCount)
@@ -159,18 +159,68 @@ public class TileMapManager : MonoBehaviour
                         }
                     }
                 }
+                else if (tileSetName == "vision")
+                {
+                    var tile = Instantiate(_tileGallery.GetTile("NoVision"));
+                    tile.position = new Vector3Int(j, i, 0);
+                    tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0), tile);
+                }
                 else
                 {
                     tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0), _tileGallery.GetTile("White"));
                 }
 
                 tileMaps[tileSetName].GetComponent<Tilemap>().SetTileFlags(new Vector3Int(j, i, 0), TileFlags.None);
-                if (tileSetName != "preview")
+                if (tileSetName != "preview" && tileSetName != "vision")
                 {
-                    tileMaps[tileSetName].GetComponent<Tilemap>().GetTile<Tile>(new Vector3Int(j, i, 0)).color = new Color(255, 255, 255, 0.0f);
+                    //tileMaps[tileSetName].GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j, i, 0)).color = new Color(255, 255, 255, 0.0f);
                 }
             }
         }
+    }
+
+    private void SetNeighbours()
+    {
+        foreach (var tileMap in tileMaps)
+        {
+            if (tileMap.Key == "vision")
+            {
+                for (int i = 0; i < verticalTileCount; i++)
+                {
+                    for (int j = 0; j < horizontalTileCount; j++)
+                    {
+                        var tile = tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j, i, 0));
+                        if (i - 1 > 0)
+                        {
+                            tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j, i - 1, 0)));
+                        }
+
+                        if (i + 1 < horizontalTileCount)
+                        {
+                            tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j, i + 1, 0)));
+                        }
+                        
+                        if (j - 1 > 0)
+                        {
+                            tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j - 1, 0)));
+                        }
+
+                        if (j + 1 < horizontalTileCount)
+                        {
+                            tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j + 1, i, 0)));
+                        }
+                    }
+                }
+
+                var newTile = tileMap.Value.GetComponent<Tilemap>().GetTile<VisionTile>(new Vector3Int(10, 10, 0));
+                foreach (var neighbour in newTile.Neighbors)
+                {
+                    Debug.Log(newTile.Neighbors.Count);
+                    tileMap.Value.GetComponent<Tilemap>().SetTile(neighbour.position, _tileGallery.GetTile("FullVision"));
+                }
+            }
+        }
+        
     }
 
     public void LoadFromData(MapData mapData)
@@ -191,8 +241,10 @@ public class TileMapManager : MonoBehaviour
         }
         
         CreateNewTileSet("ground", verticalTileCount, horizontalTileCount);
+        CreateNewTileSet("vision", verticalTileCount, horizontalTileCount);
         SetWallTileSize();
         UpdateTileSize();
+        SetNeighbours();
         
     }
 }

@@ -88,5 +88,9 @@ public class MapUI : MonoBehaviour
     {
         _mapManager.UpdateUnitMoveSpeed(int.Parse(MoveSpeedInputField.text));
     }
-    
+
+    public void DestroyUnit()
+    {
+        _mapManager.DestroySelectedUnit();
+    }
 }

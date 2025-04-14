@@ -10,7 +10,8 @@ public class MapEditorUI : MonoBehaviour
     public TMP_InputField VerticalTileCountInput;
     public TMP_Text SetTileCountText;
     public Button SetTileCountButton;
-    
+
+    public TMP_InputField MapNameInput;
     //Separation of concerns, UI shouldnt be changing tilemap directly, instead tell map editor to do it
     private MapEditorManager _mapEditorManager;
 
@@ -22,11 +23,12 @@ public class MapEditorUI : MonoBehaviour
     public void Start()
     {
         _mapEditorManager = MapEditorManager.MapEditorManagerInstance;
+        MapNameInput.onValueChanged.AddListener(delegate { OnMapNameUpdate(MapNameInput.text); });
     }
     
     public void SelectMap()
     {
-        _mapEditorManager.SetMapImage("Maps/IMG_4164");
+        _mapEditorManager.SetMapImage("Maps/dotmm");
         SetTileCountButton.enabled = true;
     }
 
@@ -64,6 +66,11 @@ public class MapEditorUI : MonoBehaviour
         
         _mapEditorManager.SaveMap();
         
+    }
+    
+    public void OnMapNameUpdate(string mapName)
+    {
+        _mapEditorManager.SetMapName(mapName);
     }
     
 }

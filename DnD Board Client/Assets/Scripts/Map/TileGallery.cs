@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Map.TileTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TileGallery : MonoBehaviour
 {
-    private Dictionary<string, Tile> _tiles;
-    private Dictionary<string, WallTile> _wallTiles;
+    private Dictionary<string, CustomTileBase> _tiles;
+
 
     public static TileGallery TileGalleryInstance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,24 +16,20 @@ public class TileGallery : MonoBehaviour
     {
         TileGalleryInstance = this;
         
-        _tiles = new Dictionary<string, Tile>();
-        _wallTiles = new Dictionary<string, WallTile>();
+        _tiles = new Dictionary<string, CustomTileBase>();
+
         
-        _tiles.Add("Black", (Tile)Resources.Load("Tiles/Black"));
-        _tiles.Add("White", (Tile)Resources.Load("Tiles/White"));
+        _tiles.Add("Black", Resources.Load<CustomTileBase>("Tiles/Black"));
+        _tiles.Add("White", Resources.Load<CustomTileBase>("Tiles/White"));
+        
+        _tiles.Add("NoVision", Resources.Load<VisionTile>("Tiles/VisionTiles/NoVision"));
+        _tiles.Add("FullVision", Resources.Load<VisionTile>("Tiles/VisionTiles/FullVision"));
+        _tiles.Add("WallTile", Resources.Load<WallTile>("Tiles/WallTiles/WallTile"));
     }
 
-    public Tile GetTile(string key)
+    public CustomTileBase GetTile(string key)
     {
         return _tiles[key];
     }
 
-    public WallTile GetWallTile(string key)
-    {
-        return _wallTiles[key];
-    }
-    public void Test()
-    {
-        Debug.Log("test");
-    }
 }

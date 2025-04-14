@@ -10,7 +10,7 @@ public class MapEditorManager : MonoBehaviour
     private TileMapManager _tileMapManager;
 
     public SpriteRenderer mapSpriteRenderer;
-    
+    public string mapName { get; private set; }
     public Vector3 bottomLeftCorner { get; private set; }
 
     public enum EditModeType
@@ -115,11 +115,16 @@ public class MapEditorManager : MonoBehaviour
         
     }
 
+    public void SetMapName(string mapName)
+    {
+        Debug.Log($"Set Map Name: {mapName}");
+        this.mapName = mapName;
+    }
 
     public void SaveMap()
     {
         var map = new MapData();
-        map.MapFileName = "Maps/IMG_4164";
+        map.MapFileName = "Maps/dotmm";
         map.TileWidth = _tileMapManager.tileWidth;
         map.TileHeight = _tileMapManager.tileHeight;
         
@@ -152,7 +157,7 @@ public class MapEditorManager : MonoBehaviour
         Debug.Log(JsonUtility.ToJson(map, true));
         
         var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client/Maps";
-        var filePath = Path.Combine(documentsLocation, "IMG_4164.json");
+        var filePath = Path.Combine(documentsLocation, mapName + ".json");
 
         var json = JsonUtility.ToJson(map, true);
         Debug.Log(json);

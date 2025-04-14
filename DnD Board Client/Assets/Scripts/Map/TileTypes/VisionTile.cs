@@ -1,7 +1,9 @@
+using Map.TileTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class VisionTile : Tile
+[CreateAssetMenu(menuName = "Tiles/VisionTile")]
+public class VisionTile : CustomTileBase
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
