@@ -19,7 +19,6 @@ public class MapManager : MonoBehaviour
     private Tile _previousTile;
 
     private Vector3Int _previousTilePosition;
-
     private bool _placeUnitMode;
 
     public GameObject unitPrefab;
