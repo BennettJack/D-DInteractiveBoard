@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Map_Editor;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class MapEditorManager : MonoBehaviour
 {
     public static MapEditorManager MapEditorManagerInstance;
-    private TileMapManager _tileMapManager;
+    private MapEditorTileMapManger _tileMapManager;
 
     public SpriteRenderer mapSpriteRenderer;
     public string mapName { get; private set; }
@@ -30,7 +31,7 @@ public class MapEditorManager : MonoBehaviour
     
     private void Start()
     {
-        _tileMapManager = TileMapManager.TileMapManagerInstance;
+        _tileMapManager = MapEditorTileMapManger.MapEditorTileMapMangerInstance;
     }
     
     public void SetTileCounts(int verticalTileCount, int horizontalTileCount)
@@ -49,9 +50,8 @@ public class MapEditorManager : MonoBehaviour
         var tileWidth = spriteWidth / _tileMapManager.horizontalTileCount;
         var tileHeight = spriteHeight / _tileMapManager.verticalTileCount;
         
-        SetTileHeight(tileHeight);
-        SetTileWidth(tileWidth);
-        
+        _tileMapManager.SetTileHeight(tileHeight);
+        _tileMapManager.SetTileWidth(tileWidth);
         _tileMapManager.SnapToMapImage(bottomLeftCorner);
     }
     

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Map;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour
 {
     public static MapManager MapManagerInstance;
-    private TileMapManager _tileMapManager;
+    private MapTileMapManager _tileMapManager;
     public SpriteRenderer mapSpriteRenderer;
     public Dictionary<string, BaseUnitController> unitControllers = new();
     public GameObject playerUnitContainer;
@@ -46,7 +47,7 @@ public class MapManager : MonoBehaviour
     }
     public void Start()
     {
-        _tileMapManager = TileMapManager.TileMapManagerInstance;
+        _tileMapManager = MapTileMapManager.MapTileMapManagerInstance;
         LoadMapFromFile();
     }
 
@@ -151,7 +152,7 @@ public class MapManager : MonoBehaviour
         mapSpriteRenderer.transform.position = new Vector3(0, 0, 5);
         
         bottomLeftCorner = mapSpriteRenderer.transform.TransformPoint(mapSpriteRenderer.sprite.bounds.min);
-        
+
         _tileMapManager.LoadFromData(mapData);
         _tileMapManager.SnapToMapImage(bottomLeftCorner);
     }

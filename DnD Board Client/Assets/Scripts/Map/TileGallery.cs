@@ -19,8 +19,7 @@ public class TileGallery : MonoBehaviour
         _tiles = new Dictionary<string, CustomTileBase>();
 
         
-        _tiles.Add("Black", Resources.Load<CustomTileBase>("Tiles/Black"));
-        _tiles.Add("White", Resources.Load<CustomTileBase>("Tiles/White"));
+        _tiles.Add("Preview", Resources.Load<PreviewTile>("Tiles/PreviewTile"));
         
         _tiles.Add("NoVision", Resources.Load<VisionTile>("Tiles/VisionTiles/NoVision"));
         _tiles.Add("FullVision", Resources.Load<VisionTile>("Tiles/VisionTiles/FullVision"));

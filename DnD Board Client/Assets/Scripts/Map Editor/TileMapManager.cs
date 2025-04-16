@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Map.TileTypes;
+using TileMapControl;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,110 +9,40 @@ using UnityEngine.Tilemaps;
 
 public class TileMapManager : MonoBehaviour
 {
-    public Dictionary<string, GameObject> tileMaps { get; private set; } = new();
+    public Dictionary<string, GameObject> tileMaps { get; protected set; } = new();
     public Grid groundAndVisionGrid;
     public Grid wallGrid;
-    private TileGallery _tileGallery;
+    protected TileGallery _tileGallery;
     
     public static TileMapManager TileMapManagerInstance;
-    public float tileWidth {get; private set;}
-    public float tileHeight {get; private set;}
-    public int horizontalTileCount { get; private set; }
-    public int verticalTileCount{ get; private set; }
+    
+    protected TileMapGenerator _tileMapGenerator;
+    public float tileWidth {get; protected set;}
+    public float tileHeight {get; protected set;}
+    public int horizontalTileCount { get; protected set; }
+    public int verticalTileCount{ get; protected set; }
 
-    private void Awake()
+
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    
+    protected void AddTileMapsToDictionary()
     {
-        TileMapManagerInstance = this;
         tileMaps.Add("vision", GameObject.FindGameObjectWithTag("VisionTileMap"));
         tileMaps.Add("ground", GameObject.FindGameObjectWithTag("GroundTileMap"));
         tileMaps.Add("wall", GameObject.FindGameObjectWithTag("WallTileMap"));
         tileMaps.Add("overlay", GameObject.FindGameObjectWithTag("OverlayTileMap"));
-        tileMaps.Add("preview", GameObject.FindGameObjectWithTag("EditorPreviewTileMap"));
-
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            tileMaps["preview"].GetComponent<Tilemap>().color = new Color(255, 255, 255, 0.2f);
-        }
-        
-        
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        _tileGallery = TileGallery.TileGalleryInstance;
-
-    }
-
-    public void SetCurrentTileMapToEdit(string tileMapName)
-    {
-        foreach (var tileMap in tileMaps)
-        {
-            if (tileMap.Key == tileMapName)
-            {
-                tileMap.Value.SetActive(true);
-                tileMap.Value.GetComponent<Tilemap>().color = new Color(255, 255, 255, 0.2f);
-            }
-            else
-            {
-                tileMap.Value.SetActive(false);
-            }
-            
-        }
-    }
-
-    public void SetTileWidth(float tWidth)
-    {
-        tileWidth = tWidth;
-    
-        //TODO - FIX THIS IT'S SUPER JANKY, IF YOU REMOVE SET WALL SIZE, EVERYTHING BREAKS
-        UpdateTileSize();
-        SetWallTileSize();
-    }
-
-    public void SetTileHeight(float tHeight)
-    {
-        tileHeight = tHeight;
-
-        //TODO - FIX THIS IT'S SUPER JANKY
-        UpdateTileSize();
-        SetWallTileSize();
-    }
-
     public void SnapToMapImage(Vector3 position)
     {
         //TODO FIX THIS IT'S SO WONKY
         foreach (var tileMap in tileMaps)
         {
-            if (tileMap.Key != "preview")
-            {
                 tileMap.Value.transform.position = position;
-            }
-            else if (SceneManager.GetActiveScene().buildIndex == 1 && tileMap.Key.Equals("preview"))
-            {
-                tileMap.Value.transform.position = position;
-            }
         }
-    }
-    public void SetTileCounts(int vTileCount, int hTileCount)
-    {
-        verticalTileCount = vTileCount;
-        horizontalTileCount = hTileCount;
-        foreach (var tileMap in tileMaps)
-        {
-            tileMap.Value.GetComponent<Tilemap>().ClearAllTiles();
-        }
-        CreateNewTileSet("preview", verticalTileCount, horizontalTileCount);
     }
 
-    private void SetWallTileSize()
-    {
-        wallGrid.transform.localScale = new Vector3(tileWidth / 2, tileHeight / 2, 0);
-    }
-    private void UpdateTileSize()
-    {
-        groundAndVisionGrid.transform.localScale = new Vector3(tileWidth, tileHeight, 0);
-    }
 
     public void PlaceWallTile(Vector3Int position, WallTile.WallType type)
     {
@@ -121,11 +52,11 @@ public class TileMapManager : MonoBehaviour
         tileMaps["wall"].GetComponent<Tilemap>().GetTile<WallTile>(position).SetWallType(type);
 
     }
-    private void CreateNewTileSet(string tileSetName, int vTileCount, int hTileCount)
+    protected void CreateNewTileSet(string tileSetName)
     {
-        for (int i = 0; i < vTileCount; i++)
+        for (int i = 0; i < verticalTileCount; i++)
         {
-            for (int j = 0; j < hTileCount; j++)
+            for (int j = 0; j < horizontalTileCount; j++)
             {
                 if (tileSetName == "preview")
                 {
@@ -134,12 +65,12 @@ public class TileMapManager : MonoBehaviour
                         if (j % 2 == 0)
                         {
                             tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
-                                _tileGallery.GetTile("Black"));
+                                _tileGallery.GetTile("Preview"));
                         }
                         else
                         {
                             tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
-                                _tileGallery.GetTile("White"));
+                                _tileGallery.GetTile("Preview"));
                         }
                     }
                     else
@@ -147,13 +78,13 @@ public class TileMapManager : MonoBehaviour
                         if (j % 2 == 0)
                         {
                             tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
-                                _tileGallery.GetTile("White"));
+                                _tileGallery.GetTile("Preview"));
 
                         }
                         else
                         {
                             tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
-                                _tileGallery.GetTile("Black"));
+                                _tileGallery.GetTile("Preview"));
 
 
                         }
@@ -167,14 +98,11 @@ public class TileMapManager : MonoBehaviour
                 }
                 else
                 {
-                    tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0), _tileGallery.GetTile("White"));
+                    Debug.Log(_tileGallery.name);
+                    tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0), _tileGallery.GetTile("Preview"));
                 }
 
                 tileMaps[tileSetName].GetComponent<Tilemap>().SetTileFlags(new Vector3Int(j, i, 0), TileFlags.None);
-                if (tileSetName != "preview" && tileSetName != "vision")
-                {
-                    //tileMaps[tileSetName].GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j, i, 0)).color = new Color(255, 255, 255, 0.0f);
-                }
             }
         }
     }
@@ -211,18 +139,16 @@ public class TileMapManager : MonoBehaviour
                         }
                     }
                 }
-
-                var newTile = tileMap.Value.GetComponent<Tilemap>().GetTile<VisionTile>(new Vector3Int(10, 10, 0));
-                foreach (var neighbour in newTile.Neighbors)
-                {
-                    Debug.Log(newTile.Neighbors.Count);
-                    tileMap.Value.GetComponent<Tilemap>().SetTile(neighbour.position, _tileGallery.GetTile("FullVision"));
-                }
             }
         }
-        
     }
-
+    
+    protected void UpdateTileSize()
+    {
+        groundAndVisionGrid.transform.localScale = new Vector3(tileWidth, tileHeight, 0);
+        wallGrid.transform.localScale = new Vector3(tileWidth / 2, tileHeight / 2, 0);
+    }
+    
     public void LoadFromData(MapData mapData)
     {
 
@@ -240,9 +166,8 @@ public class TileMapManager : MonoBehaviour
             tile.colliderType = Tile.ColliderType.Grid;
         }
         
-        CreateNewTileSet("ground", verticalTileCount, horizontalTileCount);
-        CreateNewTileSet("vision", verticalTileCount, horizontalTileCount);
-        SetWallTileSize();
+        CreateNewTileSet("ground");
+        CreateNewTileSet("vision");
         UpdateTileSize();
         SetNeighbours();
         

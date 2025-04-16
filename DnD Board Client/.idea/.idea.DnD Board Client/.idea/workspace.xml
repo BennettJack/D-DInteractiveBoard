@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b844977-26cf-4e12-8dcc-1e55483b102a" name="Changes" comment="Moving to new repository as desktop doesn't recognise when files are changed" />
+    <list default="true" id="7b844977-26cf-4e12-8dcc-1e55483b102a" name="Changes" comment="Moving to new repository as desktop doesn't recognise when files are changed">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +16,20 @@
     <option name="firstShow" value="false" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "BennettJack"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/BennettJack/D-DInteractiveBoard.git",
+    "accountId": "db00d507-ca98-48e0-b1bc-32ac4324a305"
+  }
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377974c6b76d48cfaec789207eaa8920c400/4e/1fca42c0/Tile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/377974c6b76d48cfaec789207eaa8920c400/79/6df489a0/TileBase.cs" root0="SKIP_HIGHLIGHTING" />
@@ -45,7 +59,8 @@
   "keyToString": {
     "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Refactor-TileMap-manager-code-#1",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -129,6 +144,7 @@
       <workItem from="1744530893761" duration="8950000" />
       <workItem from="1744619516409" duration="557000" />
       <workItem from="1744621403849" duration="2957000" />
+      <workItem from="1744791696680" duration="6192000" />
     </task>
     <servers />
   </component>
@@ -156,24 +172,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Map/MapManager.cs</url>
-          <line>85</line>
-          <properties documentPath="H:\Projects\Uni\Final Year Project\Project\Board Game Client\DnD Board Client\Assets\Scripts\Map\MapManager.cs" containingFunctionPresentation="Method 'Update'">
-            <startOffsets>
-              <option value="2706" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2707" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
