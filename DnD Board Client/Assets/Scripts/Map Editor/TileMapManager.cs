@@ -13,10 +13,9 @@ public class TileMapManager : MonoBehaviour
     public Grid groundAndVisionGrid;
     public Grid wallGrid;
     protected TileGallery _tileGallery;
-    
-    public static TileMapManager TileMapManagerInstance;
-    
     protected TileMapGenerator _tileMapGenerator;
+    
+    
     public float tileWidth {get; protected set;}
     public float tileHeight {get; protected set;}
     public int horizontalTileCount { get; protected set; }
@@ -36,7 +35,6 @@ public class TileMapManager : MonoBehaviour
     }
     public void SnapToMapImage(Vector3 position)
     {
-        //TODO FIX THIS IT'S SO WONKY
         foreach (var tileMap in tileMaps)
         {
                 tileMap.Value.transform.position = position;
@@ -58,33 +56,38 @@ public class TileMapManager : MonoBehaviour
         {
             for (int j = 0; j < horizontalTileCount; j++)
             {
+                var tile = Instantiate(_tileGallery.GetTile("Preview"));
                 if (tileSetName == "preview")
                 {
                     if (i % 2 == 0)
                     {
                         if (j % 2 == 0)
                         {
+                            tile.color = Color.white;
                             tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
-                                _tileGallery.GetTile("Preview"));
+                                tile);
                         }
                         else
                         {
+                            tile.color = Color.black;
                             tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
-                                _tileGallery.GetTile("Preview"));
+                               tile);
                         }
                     }
                     else
                     {
                         if (j % 2 == 0)
                         {
+                            tile.color = Color.black;
                             tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
-                                _tileGallery.GetTile("Preview"));
+                                tile);
 
                         }
                         else
                         {
+                            tile.color = Color.white;
                             tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
-                                _tileGallery.GetTile("Preview"));
+                                tile);
 
 
                         }
@@ -92,13 +95,12 @@ public class TileMapManager : MonoBehaviour
                 }
                 else if (tileSetName == "vision")
                 {
-                    var tile = Instantiate(_tileGallery.GetTile("NoVision"));
+                    tile = Instantiate(_tileGallery.GetTile("NoVision"));
                     tile.position = new Vector3Int(j, i, 0);
                     tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0), tile);
                 }
                 else
                 {
-                    Debug.Log(_tileGallery.name);
                     tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0), _tileGallery.GetTile("Preview"));
                 }
 
@@ -111,31 +113,38 @@ public class TileMapManager : MonoBehaviour
     {
         foreach (var tileMap in tileMaps)
         {
-            if (tileMap.Key == "vision")
+            Debug.Log(tileMap.Key);
             {
-                for (int i = 0; i < verticalTileCount; i++)
-                {
-                    for (int j = 0; j < horizontalTileCount; j++)
+                if(tileMap.Key != "wall"){
+                    for (int i = 0; i < verticalTileCount; i++)
                     {
-                        var tile = tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j, i, 0));
-                        if (i - 1 > 0)
+                        for (int j = 0; j < horizontalTileCount; j++)
                         {
-                            tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j, i - 1, 0)));
-                        }
+                            var tile = tileMap.Value.GetComponent<Tilemap>()
+                                .GetTile<CustomTileBase>(new Vector3Int(j, i, 0));
+                            if (i - 1 > 0)
+                            {
+                                tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>()
+                                    .GetTile<CustomTileBase>(new Vector3Int(j, i - 1, 0)));
+                            }
 
-                        if (i + 1 < horizontalTileCount)
-                        {
-                            tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j, i + 1, 0)));
-                        }
-                        
-                        if (j - 1 > 0)
-                        {
-                            tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j - 1, 0)));
-                        }
+                            if (i + 1 < horizontalTileCount)
+                            {
+                                tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>()
+                                    .GetTile<CustomTileBase>(new Vector3Int(j, i + 1, 0)));
+                            }
 
-                        if (j + 1 < horizontalTileCount)
-                        {
-                            tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>().GetTile<CustomTileBase>(new Vector3Int(j + 1, i, 0)));
+                            if (j - 1 > 0)
+                            {
+                                tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>()
+                                    .GetTile<CustomTileBase>(new Vector3Int(j - 1, 0)));
+                            }
+
+                            if (j + 1 < horizontalTileCount)
+                            {
+                                tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>()
+                                    .GetTile<CustomTileBase>(new Vector3Int(j + 1, i, 0)));
+                            }
                         }
                     }
                 }

@@ -17,6 +17,19 @@ namespace TileMapControl
         void Start()
         {
             _mapEditorTileMapManger = MapEditorTileMapManger.MapEditorTileMapMangerInstance;
-        } 
+        }
+
+        public void GenerateVisionTileMap(int width, int height, float tileWidth, float tileHeight)
+        {
+            
+        }
+        
+        public void GenerateGroundTileMap(int width, int height, float tileWidth, float tileHeight){}
+        
+        public void GenerateOverlayTileMap(int width, int height, float tileWidth, float tileHeight){}
+        
+        public void GeneratePreviewTileMap(int width, int height, float tileWidth, float tileHeight){}
+        
+        public void GenerateWallTileMap(int width, int height, float tileWidth, float tileHeight){}
     }
 }

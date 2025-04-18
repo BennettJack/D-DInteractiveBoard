@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec05368088258f747addc3123857d795, type: 3}
   m_Name: NoVision
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 619967506, guid: 2b25f8bb9a49d184d89d142768b48340, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 1132351132, guid: 2b25f8bb9a49d184d89d142768b48340, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Transform:
     e00: 1
     e01: 0
@@ -35,3 +35,4 @@ MonoBehaviour:
   m_Flags: 1
   m_ColliderType: 1
   Neighbors: []
+  position: {x: 0, y: 0, z: 0}
