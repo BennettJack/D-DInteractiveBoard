@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Map.TileTypes.SerializableTiles;
 using Scriptable_Objects.Units.BaseUnits;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class MapData
     public int HorizontalTileCount;
     public int VerticalTileCount;
     public List<SerializableWallTile> WallTiles = new();
+    public List<SerializableFloorTile> GroundTiles = new();
+    public List<SerializableVisionTile> VisionTiles = new();
     public string MapFileName;
     private List<BaseUnit> Units;
 }

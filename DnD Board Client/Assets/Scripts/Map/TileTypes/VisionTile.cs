@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Map.TileTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -5,15 +6,10 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(menuName = "Tiles/VisionTile")]
 public class VisionTile : CustomTileBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public List<string> DiscoveredBy { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    public void AddToDiscoveredBy(string characterName)
     {
-        
+        DiscoveredBy.Add(characterName);
     }
 }

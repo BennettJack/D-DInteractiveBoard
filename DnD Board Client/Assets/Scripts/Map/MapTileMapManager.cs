@@ -1,4 +1,5 @@
 ﻿using System;
+using TileMapControl;
 
 namespace Map
 {
@@ -16,6 +17,7 @@ namespace Map
         private void Start()
         {
             _tileGallery = TileGallery.TileGalleryInstance;
+            _tileMapGenerator = TileMapGenerator.TileMapGeneratorInstance;
         }
     }
 }

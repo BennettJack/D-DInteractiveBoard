@@ -50,6 +50,11 @@ public class TileMapManager : MonoBehaviour
         tileMaps["wall"].GetComponent<Tilemap>().GetTile<WallTile>(position).SetWallType(type);
 
     }
+
+    public void CreateNewTileSets()
+    {
+        
+    }
     protected void CreateNewTileSet(string tileSetName)
     {
         for (int i = 0; i < verticalTileCount; i++)
@@ -95,9 +100,7 @@ public class TileMapManager : MonoBehaviour
                 }
                 else if (tileSetName == "vision")
                 {
-                    tile = Instantiate(_tileGallery.GetTile("NoVision"));
-                    tile.position = new Vector3Int(j, i, 0);
-                    tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0), tile);
+                    
                 }
                 else
                 {
@@ -176,7 +179,8 @@ public class TileMapManager : MonoBehaviour
         }
         
         CreateNewTileSet("ground");
-        CreateNewTileSet("vision");
+        Debug.Log($"{horizontalTileCount}, {verticalTileCount}, {tileWidth}, {tileHeight}");
+        _tileMapGenerator.GenerateVisionTileMap(horizontalTileCount, verticalTileCount, tileWidth, tileHeight, mapData);
         UpdateTileSize();
         SetNeighbours();
         
