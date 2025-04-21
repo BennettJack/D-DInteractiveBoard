@@ -36,3 +36,4 @@ MonoBehaviour:
   m_ColliderType: 1
   Neighbors: []
   position: {x: 0, y: 0, z: 0}
+  prefab: {fileID: 8392990923096778784, guid: 19503d15e5896c44ab9109745d791af8, type: 3}

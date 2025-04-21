@@ -130,7 +130,12 @@ public class MapEditorManager : MonoBehaviour
         
         map.HorizontalTileCount = _tileMapManager.horizontalTileCount;
         map.VerticalTileCount = _tileMapManager.verticalTileCount;
-        
+        map.DiscoveredVisionTiles.Add(
+            new ()
+            {
+                position = new Vector3Int(1, 1, 0),
+                
+            });
         var bounds = _tileMapManager.tileMaps["wall"].GetComponent<Tilemap>().cellBounds;
         
         for (int x = bounds.xMin; x < bounds.xMax; x++)

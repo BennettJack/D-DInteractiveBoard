@@ -178,11 +178,11 @@ public class TileMapManager : MonoBehaviour
             tile.colliderType = Tile.ColliderType.Grid;
         }
         
-        CreateNewTileSet("ground");
-        Debug.Log($"{horizontalTileCount}, {verticalTileCount}, {tileWidth}, {tileHeight}");
-        _tileMapGenerator.GenerateVisionTileMap(horizontalTileCount, verticalTileCount, tileWidth, tileHeight, mapData);
+        //CreateNewTileSet("ground");
+        var testMap = _tileMapGenerator.GenerateVisionTileMap( verticalTileCount, horizontalTileCount, 
+            mapData, tileMaps["vision"].GetComponent<Tilemap>());
         UpdateTileSize();
-        SetNeighbours();
+        //SetNeighbours();
         
     }
 }

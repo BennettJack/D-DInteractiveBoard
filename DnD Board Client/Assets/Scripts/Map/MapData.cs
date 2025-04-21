@@ -15,7 +15,7 @@ public class MapData
     public int VerticalTileCount;
     public List<SerializableWallTile> WallTiles = new();
     public List<SerializableFloorTile> GroundTiles = new();
-    public List<SerializableVisionTile> VisionTiles = new();
+    public List<SerializableVisionTile> DiscoveredVisionTiles = new();
     public string MapFileName;
     private List<BaseUnit> Units;
 }

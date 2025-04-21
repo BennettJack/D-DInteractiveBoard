@@ -3829,7 +3829,7 @@ GameObject:
   - component: {fileID: 2058271621}
   - component: {fileID: 2058271620}
   - component: {fileID: 2058271622}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: VisionTileMap
   m_TagString: VisionTileMap
   m_Icon: {fileID: 0}
@@ -3948,13 +3948,13 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058271618}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -4112,6 +4112,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060752508}
   m_CullTransparentMesh: 1
+--- !u!1001 &1953471804742315740
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.484891
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3986498
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.1668112
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793939096684007687, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8392990923096778784, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
+      propertyPath: m_Name
+      value: VisionTileGameObject
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19503d15e5896c44ab9109745d791af8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4125,3 +4182,4 @@ SceneRoots:
   - {fileID: 1899600927}
   - {fileID: 861907571}
   - {fileID: 1237399080}
+  - {fileID: 1953471804742315740}

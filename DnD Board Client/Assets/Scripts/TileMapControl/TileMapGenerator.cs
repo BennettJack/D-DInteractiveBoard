@@ -30,29 +30,28 @@ namespace TileMapControl
             return tilemap;
         }
         
-        public Tilemap GenerateVisionTileMap(int width, int height, float tileWidth, float tileHeight, MapData mapData)
+        public Tilemap GenerateVisionTileMap(int width, int height, MapData mapData, Tilemap tileMap)
         {
-            Debug.Log("Generating Vision Tile Map");
-            var tilemap = new Tilemap();
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    Debug.Log("test");
-                    if (mapData.VisionTiles.Where(tile => tile.position == new Vector3Int(i, j, 0)) != null)
+                    if (mapData.DiscoveredVisionTiles.FirstOrDefault(tile => tile.position == new Vector3Int(i, j, 0)) != null)
                     {
                         Debug.Log("Vision Tile Found");
-                        tilemap.SetTile(new Vector3Int(i, j, 0), Instantiate(_tileGallery.GetTile("FullVision")));
+                        tileMap.SetTile(new Vector3Int(i, j, 0), Instantiate(_tileGallery.GetTile("FullVision")));
                             
                     }
                     else
                     {
-                        tilemap.SetTile(new Vector3Int(i, j, 0), Instantiate(_tileGallery.GetTile("NoVision")));
+                        
+                        tileMap.SetTile(new Vector3Int(i, j, 0), Instantiate(_tileGallery.GetTile("NoVision")));
+                        
                     }
                 }
             }
 
-            return tilemap;
+            return tileMap;
         }
         
         public void GenerateGroundTileMap(int width, int height, float tileWidth, float tileHeight){}

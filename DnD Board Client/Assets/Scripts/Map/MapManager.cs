@@ -25,7 +25,6 @@ public class MapManager : MonoBehaviour
     public GameObject unitPrefab;
 
     private string _unitName;
-    private string teststring;
     private Vector3 MouseWorldPosition;
     private MapData mapData;
     public float unitSelectDelayThreshold = 1f;
@@ -119,12 +118,12 @@ public class MapManager : MonoBehaviour
         
         if (currentlySelectedUnit != null && unitSelectDelay >= unitSelectDelayThreshold)
         {
-            Debug.Log(currentlySelectedUnit.name);
             if (Input.GetMouseButtonDown(1))
             {
                 currentlySelectedUnit.transform.position = GetMouseWorldPosition();
+                currentlySelectedUnit.GetComponent<BaseUnitController>().UpdateVision();
                 currentlySelectedUnit = null;
-                DiscoverTiles(GetMousePosition());
+                
             }
         }
     }
@@ -141,7 +140,7 @@ public class MapManager : MonoBehaviour
     public void LoadMapFromFile()
     {
         var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client/Maps";
-        var filePath = Path.Combine(documentsLocation, "bigmap.json");
+        var filePath = Path.Combine(documentsLocation, "bigmap2.json");
 
         var json = File.ReadAllText(filePath);
         mapData = JsonUtility.FromJson<MapData>(json);
