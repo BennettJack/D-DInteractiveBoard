@@ -19,9 +19,10 @@ public class VisionTile : CustomTileBase
         if (prefab != null && go == null)
         {
             Vector3 worldPos = tilemap.GetComponent<Tilemap>().GetCellCenterWorld(pos);
-            GameObject newTile = Object.Instantiate(prefab, worldPos, Quaternion.identity);
-            newTile.transform.SetParent(GameObject.Find("VisionCollisionTiles").transform);
-            newTile.name = $"Tile_{pos}";
+            GameObject visionCollider = Instantiate(prefab, worldPos, Quaternion.identity);
+            visionCollider.layer = LayerMask.NameToLayer("Vision");
+            visionCollider.transform.SetParent(GameObject.Find("VisionCollisionTiles").transform);
+            visionCollider.name = $"Tile_{pos}";
         }
 
         return base.StartUp(position, tilemap, go);

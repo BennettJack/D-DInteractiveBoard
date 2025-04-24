@@ -140,7 +140,7 @@ public class MapManager : MonoBehaviour
     public void LoadMapFromFile()
     {
         var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client/Maps";
-        var filePath = Path.Combine(documentsLocation, "bigmap2.json");
+        var filePath = Path.Combine(documentsLocation, "IMG_4164.json");
 
         var json = File.ReadAllText(filePath);
         mapData = JsonUtility.FromJson<MapData>(json);

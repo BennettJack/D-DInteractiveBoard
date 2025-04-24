@@ -44,15 +44,16 @@ public class BaseUnitController : MonoBehaviour
     {
         Debug.Log("updateVision");
 
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(new Vector3(transform.position.x, transform.position.y, 0), 20f, transform.forward
-            , 100f, LayerMask.GetMask("Vision"));
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(new Vector3(transform.position.x, transform.position.y, 0), 1f, transform.forward
+            , 12f, LayerMask.GetMask("Vision"));
         
         int count;
         
         
         foreach (RaycastHit2D hit in hits)
         {
-            Debug.Log(hits.Length);
+            Debug.Log(hit.transform.name);
+            
         }
         
     }

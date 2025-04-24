@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3793939096684007687}
   - component: {fileID: 8001965896911066224}
+  - component: {fileID: 1535246749558462209}
   m_Layer: 0
   m_Name: VisionTileGameObject
   m_TagString: Untagged
@@ -78,3 +79,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1535246749558462209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8392990923096778784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d35e730efbaf94f92f26936ddba04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

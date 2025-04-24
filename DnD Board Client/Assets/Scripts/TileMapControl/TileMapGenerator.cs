@@ -39,13 +39,13 @@ namespace TileMapControl
                     if (mapData.DiscoveredVisionTiles.FirstOrDefault(tile => tile.position == new Vector3Int(i, j, 0)) != null)
                     {
                         Debug.Log("Vision Tile Found");
-                        tileMap.SetTile(new Vector3Int(i, j, 0), Instantiate(_tileGallery.GetTile("FullVision")));
+                        tileMap.SetTile(new Vector3Int(i, j, 0), _tileGallery.GetTile("FullVision"));
                             
                     }
                     else
                     {
                         
-                        tileMap.SetTile(new Vector3Int(i, j, 0), Instantiate(_tileGallery.GetTile("NoVision")));
+                        tileMap.SetTile(new Vector3Int(i, j, 0), _tileGallery.GetTile("NoVision"));
                         
                     }
                 }
