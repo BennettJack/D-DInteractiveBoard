@@ -1,4 +1,5 @@
 using System;
+using DataObjects.Units;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,5 +25,11 @@ public class CampaignSetupUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("campaign setup ui started");
+    }
+
+    public void Test()
+    {
+        Debug.Log(UnitManager.UnitManagerInstance.GetAllUnits());
     }
 }

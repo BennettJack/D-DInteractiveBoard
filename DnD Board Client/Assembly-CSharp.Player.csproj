@@ -49,9 +49,14 @@
     <Compile Include="Assets\Scripts\Map\TileTypes\FloorTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Barbarian.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableFloorTile.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Sorcerer.cs" />
+    <Compile Include="Assets\Scripts\UnitManagement\UnitLoader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\IBaseUnit.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\BaseUnit.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\VisionTile.cs" />
     <Compile Include="Assets\Scripts\Map Editor\MapEditorUI.cs" />
     <Compile Include="Assets\Scripts\Map Editor\MapEditorTileMapManger.cs" />
@@ -59,24 +64,32 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Paladin.cs" />
+    <Compile Include="Assets\DataObjects\Race.cs" />
     <Compile Include="Assets\Scripts\Map\SerializableTile.cs" />
     <Compile Include="Assets\Scripts\Map Editor\MapEditorManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Fighter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\CamapaignSetup\CampaignSetupController.cs" />
     <Compile Include="Assets\Scripts\Map\MapUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Druid.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Scripts\Main Menu\MainMenu.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Monk.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\CustomTileBase.cs" />
     <Compile Include="Assets\Scripts\Map\MapManager.cs" />
     <Compile Include="Assets\Scripts\Units\BaseUnitController.cs" />
     <Compile Include="Assets\Scriptable Objects\Spells\AreaOfEffectSpell.cs" />
+    <Compile Include="Assets\DataObjects\CampaignData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+    <Compile Include="Assets\Scripts\UnitManagement\UnitFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Wizard.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
@@ -91,22 +104,27 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Map\WallWaypoint.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Rogue.cs" />
     <Compile Include="Assets\Scripts\Map\MapData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scriptable Objects\Spells\BaseSpell.cs" />
-    <Compile Include="Assets\Scriptable Objects\Units\BaseUnits\BaseUnit.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\Scripts\Map\MapTileMapManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Scripts\UnitManagement\UnitManager.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\PreviewTile.cs" />
+    <Compile Include="Assets\Scriptable Objects\Databases\UnitDatabase.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Cleric.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Bard.cs" />
     <Compile Include="Assets\Scripts\Map Editor\TileMapManager.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableWallTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\WallTile.cs" />
+    <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Warlock.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableCustomTile.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableVisionTile.cs" />
     <Compile Include="Assets\Scripts\TileMapControl\TileMapGenerator.cs" />
@@ -335,6 +353,9 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.visualscripting\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.nuget.newtonsoft-json\Runtime\AOT\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>E:\Apps\6000.0.33f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

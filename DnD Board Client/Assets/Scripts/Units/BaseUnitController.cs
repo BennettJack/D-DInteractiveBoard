@@ -7,7 +7,7 @@ using UnityEngine;
 public class BaseUnitController : MonoBehaviour
 {
     public TMP_Text namePlate;
-    public BaseUnit baseUnit { get; private set; }
+    public BaseUnit BaseUnit { get; private set; }
     public int unitId;
     public Vector3Int position;
     private MapManager _mapManagerInstance;

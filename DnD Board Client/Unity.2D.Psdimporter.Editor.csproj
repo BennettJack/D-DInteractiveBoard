@@ -479,6 +479,9 @@
     <Reference Include="Mono.Cecil">
       <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.nuget.mono-cecil\Mono.Cecil.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.nuget.newtonsoft-json\Runtime\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>E:\Apps\6000.0.33f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>

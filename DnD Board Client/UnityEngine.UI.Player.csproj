@@ -356,6 +356,9 @@
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.visualscripting\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.nuget.newtonsoft-json\Runtime\AOT\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="netstandard">
       <HintPath>E:\Apps\6000.0.33f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
     </Reference>

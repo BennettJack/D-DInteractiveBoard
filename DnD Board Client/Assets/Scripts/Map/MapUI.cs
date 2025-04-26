@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using DataObjects.Units;
+using Newtonsoft.Json;
+using Scriptable_Objects.Units.BaseUnits;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -73,6 +77,32 @@ public class MapUI : MonoBehaviour
     }
     public void OnPlaceJackClick()
     {
+        BaseUnit unit1 = new BaseUnit()
+        {
+            unitName = "Jack",
+            unitType = "Wizard"
+        };
+        BaseUnit unit2 = new BaseUnit()
+        {
+            unitName = "Harry",
+            unitType = "Barbarian"
+        };
+        BaseUnit unit3 = new BaseUnit()
+        {
+            unitName = "Beth",
+            unitType = "Druid"
+        };
+        var testList = new List<BaseUnit>();
+        testList.Add(unit1);
+        testList.Add(unit2);
+        testList.Add(unit3);
+        var testListToJson = JsonConvert.SerializeObject(testList);
+        UnitLoader.UnitLoaderInstance.LoadUnits(testListToJson);
+        var test = UnitManager.UnitManagerInstance.GetAllUnits();
+        foreach(var unit in test)
+        {
+            Debug.Log(unit.unitName);
+        }
         _mapManager.PlaceUnit("Jack");
     }
     public void OnPlaceBethClick()
