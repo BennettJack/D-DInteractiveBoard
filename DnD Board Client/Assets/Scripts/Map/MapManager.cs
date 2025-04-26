@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Map;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour
 {
     public static MapManager MapManagerInstance;
-    private TileMapManager _tileMapManager;
+    private MapTileMapManager _tileMapManager;
     public SpriteRenderer mapSpriteRenderer;
     public Dictionary<string, BaseUnitController> unitControllers = new();
     public GameObject playerUnitContainer;
     public GameObject enemyUnitContainer;
     public Vector3 bottomLeftCorner { get; private set; }
-    
     public GameObject currentlySelectedUnit;
     
     private Tile _previousTile;
@@ -25,42 +25,13 @@ public class MapManager : MonoBehaviour
     public GameObject unitPrefab;
 
     private string _unitName;
-
     private Vector3 MouseWorldPosition;
-
+    private MapData mapData;
     public float unitSelectDelayThreshold = 1f;
     public float unitSelectDelay = 0f;
     public void Awake()
     {
         MapManagerInstance = this;
-        //TODO Clean up
-        /*unitControllers.Add(
-            "Jack",
-            I
-            {
-                name = "Jack",
-            });
-        unitControllers.Add(
-            "Beth",
-            new()
-            {
-                name = "Beth",
-            });
-        unitControllers.Add(
-            "Harry",
-            new()
-            {
-                name = "Harry",
-            });
-
-        unitControllers["jack"].baseUnit.SetUnitName("jack");
-        unitControllers["beth"].baseUnit.SetUnitName("beth");
-        unitControllers["harry"].baseUnit.SetUnitName("harry");
-        
-        unitControllers["jack"].baseUnit.SetMoveSpeed(25);
-        unitControllers["beth"].baseUnit.SetMoveSpeed(30);
-        unitControllers["harry"].baseUnit.SetMoveSpeed(30);*/
-
     }
 
     public void StopPlaceUnitMode()
@@ -75,7 +46,7 @@ public class MapManager : MonoBehaviour
     }
     public void Start()
     {
-        _tileMapManager = TileMapManager.TileMapManagerInstance;
+        _tileMapManager = MapTileMapManager.MapTileMapManagerInstance;
         LoadMapFromFile();
     }
 
@@ -99,6 +70,10 @@ public class MapManager : MonoBehaviour
         return _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>().GetTile<Tile>(tileMapPos);
     }
 
+    public void DestroySelectedUnit()
+    {
+        Destroy(currentlySelectedUnit);
+    }
     public void UpdateUnitMoveSpeed(int ms)
     {
         currentlySelectedUnit.GetComponent<BaseUnitController>().movementSpeed = ms;
@@ -109,20 +84,6 @@ public class MapManager : MonoBehaviour
         {
             unitSelectDelay += Time.deltaTime;
         }
-        /*var tilePos = GetMousePosition();
-        if (_previousTilePosition != tilePos)
-        {
-            Debug.Log("new tile");
-            _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>()
-                .GetTile<Tile>(_previousTilePosition).color = new Color(255, 255, 255, 0.0f);
-            _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>()
-                .GetTile<Tile>(tilePos).color = new Color(0, 255, 0, 0.4f);
-            _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>()
-                .RefreshTile(_previousTilePosition);
-            _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>()
-                .RefreshTile(tilePos);
-            _previousTilePosition = tilePos;
-        }*/
 
         MouseWorldPosition = GetMouseWorldPosition();
         if (Input.GetMouseButtonDown(1) && _placeUnitMode)
@@ -144,23 +105,35 @@ public class MapManager : MonoBehaviour
             {
                 unitToPlace.transform.parent = playerUnitContainer.transform;
                 controller.namePlate.text = _unitName;
-                
+                _placeUnitMode = false;
             }
-
+            unitToPlace.transform.localScale = new Vector3(mapData.TileHeight, mapData.TileHeight, 1);
             unitToPlace.gameObject.transform.position = MouseWorldPosition;
-            _placeUnitMode = false;
+            
             
 
         }
         
+        
+        
         if (currentlySelectedUnit != null && unitSelectDelay >= unitSelectDelayThreshold)
         {
-            Debug.Log(currentlySelectedUnit.name);
             if (Input.GetMouseButtonDown(1))
             {
                 currentlySelectedUnit.transform.position = GetMouseWorldPosition();
+                currentlySelectedUnit.GetComponent<BaseUnitController>().UpdateVision();
                 currentlySelectedUnit = null;
+                
             }
+        }
+    }
+
+    public void DiscoverTiles(Vector3Int unitPosition)
+    {
+        //TODO - MAKE THIS DYNAMIC 
+        for (int i = 0; i < 12; i++)
+        {
+            //if(_tileMapManager.tileMaps["vision"].GetT)
         }
     }
 
@@ -170,7 +143,7 @@ public class MapManager : MonoBehaviour
         var filePath = Path.Combine(documentsLocation, "IMG_4164.json");
 
         var json = File.ReadAllText(filePath);
-        var mapData = JsonUtility.FromJson<MapData>(json);
+        mapData = JsonUtility.FromJson<MapData>(json);
         
         
         var sprite = Resources.Load<Sprite>(mapData.MapFileName);
@@ -178,7 +151,7 @@ public class MapManager : MonoBehaviour
         mapSpriteRenderer.transform.position = new Vector3(0, 0, 5);
         
         bottomLeftCorner = mapSpriteRenderer.transform.TransformPoint(mapSpriteRenderer.sprite.bounds.min);
-        
+
         _tileMapManager.LoadFromData(mapData);
         _tileMapManager.SnapToMapImage(bottomLeftCorner);
     }

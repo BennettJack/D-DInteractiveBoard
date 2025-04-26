@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Map_Editor;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,10 +8,10 @@ using UnityEngine.Tilemaps;
 public class MapEditorManager : MonoBehaviour
 {
     public static MapEditorManager MapEditorManagerInstance;
-    private TileMapManager _tileMapManager;
+    private MapEditorTileMapManger _tileMapManager;
 
     public SpriteRenderer mapSpriteRenderer;
-    
+    public string mapName { get; private set; }
     public Vector3 bottomLeftCorner { get; private set; }
 
     public enum EditModeType
@@ -30,7 +31,7 @@ public class MapEditorManager : MonoBehaviour
     
     private void Start()
     {
-        _tileMapManager = TileMapManager.TileMapManagerInstance;
+        _tileMapManager = MapEditorTileMapManger.MapEditorTileMapMangerInstance;
     }
     
     public void SetTileCounts(int verticalTileCount, int horizontalTileCount)
@@ -49,9 +50,8 @@ public class MapEditorManager : MonoBehaviour
         var tileWidth = spriteWidth / _tileMapManager.horizontalTileCount;
         var tileHeight = spriteHeight / _tileMapManager.verticalTileCount;
         
-        SetTileHeight(tileHeight);
-        SetTileWidth(tileWidth);
-        
+        _tileMapManager.SetTileHeight(tileHeight);
+        _tileMapManager.SetTileWidth(tileWidth);
         _tileMapManager.SnapToMapImage(bottomLeftCorner);
     }
     
@@ -115,17 +115,27 @@ public class MapEditorManager : MonoBehaviour
         
     }
 
+    public void SetMapName(string mapName)
+    {
+        Debug.Log($"Set Map Name: {mapName}");
+        this.mapName = mapName;
+    }
 
     public void SaveMap()
     {
         var map = new MapData();
-        map.MapFileName = "Maps/IMG_4164";
+        map.MapFileName = "Maps/dotmm";
         map.TileWidth = _tileMapManager.tileWidth;
         map.TileHeight = _tileMapManager.tileHeight;
         
         map.HorizontalTileCount = _tileMapManager.horizontalTileCount;
         map.VerticalTileCount = _tileMapManager.verticalTileCount;
-        
+        map.DiscoveredVisionTiles.Add(
+            new ()
+            {
+                position = new Vector3Int(1, 1, 0),
+                
+            });
         var bounds = _tileMapManager.tileMaps["wall"].GetComponent<Tilemap>().cellBounds;
         
         for (int x = bounds.xMin; x < bounds.xMax; x++)
@@ -152,7 +162,7 @@ public class MapEditorManager : MonoBehaviour
         Debug.Log(JsonUtility.ToJson(map, true));
         
         var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client/Maps";
-        var filePath = Path.Combine(documentsLocation, "IMG_4164.json");
+        var filePath = Path.Combine(documentsLocation, mapName + ".json");
 
         var json = JsonUtility.ToJson(map, true);
         Debug.Log(json);

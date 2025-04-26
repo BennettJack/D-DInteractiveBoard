@@ -1,13 +1,11 @@
+using Map.TileTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
 [CreateAssetMenu(menuName = "Tiles/WallTile")]
-public class WallTile : Tile
+public class WallTile : CustomTileBase
 {
-    public Vector3 position;
-    public string test;
-
     public enum WallType
     {
         FullCover,

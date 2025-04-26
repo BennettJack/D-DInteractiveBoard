@@ -39,4 +39,21 @@ public class BaseUnitController : MonoBehaviour
         Debug.Log(other.gameObject.name);
         Debug.Log("colliding");
     }
+    public void UpdateVision()
+    {
+        Debug.Log("updateVision");
+
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(new Vector3(transform.position.x, transform.position.y, 0), 1f, transform.forward
+            , 12f, LayerMask.GetMask("Vision"));
+        
+        int count;
+        
+        
+        foreach (RaycastHit2D hit in hits)
+        {
+            Debug.Log(hit.transform.name);
+            
+        }
+        
+    }
 }

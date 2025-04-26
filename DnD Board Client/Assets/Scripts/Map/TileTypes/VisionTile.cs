@@ -1,17 +1,30 @@
+using System.Collections.Generic;
+using Map.TileTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class VisionTile : Tile
+[CreateAssetMenu(menuName = "Tiles/VisionTile")]
+public class VisionTile : CustomTileBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public List<string> DiscoveredBy { get; private set; }
+    public GameObject prefab;
+    
+    public void AddToDiscoveredBy(string characterName)
     {
-        
+        DiscoveredBy.Add(characterName);
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public override bool StartUp(Vector3Int pos, ITilemap tilemap, GameObject go)
     {
-        
+        if (prefab != null && go == null)
+        {
+            Vector3 worldPos = tilemap.GetComponent<Tilemap>().GetCellCenterWorld(pos);
+            GameObject visionCollider = Instantiate(prefab, worldPos, Quaternion.identity);
+            visionCollider.layer = LayerMask.NameToLayer("Vision");
+            visionCollider.transform.SetParent(GameObject.Find("VisionCollisionTiles").transform);
+            visionCollider.name = $"Tile_{pos}";
+        }
+
+        return base.StartUp(position, tilemap, go);
     }
 }

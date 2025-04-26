@@ -1,9 +1,6 @@
-using Map.TileTypes;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-
-public class FloorTile : CustomTileBase
+public class VisionTileGOPrefabData : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
