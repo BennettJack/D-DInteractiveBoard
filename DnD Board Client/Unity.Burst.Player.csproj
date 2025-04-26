@@ -316,7 +316,7 @@
       <HintPath>E:\Apps\6000.0.33f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>H:\Projects\Uni\Final Year Project\Project\Board Game Client\DnD Board Client\Library\PackageCache\com.unity.burst\Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.burst\Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>E:\Apps\6000.0.33f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

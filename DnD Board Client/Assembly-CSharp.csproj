@@ -50,9 +50,11 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableFloorTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\VisionTile.cs" />
     <Compile Include="Assets\Scripts\Map Editor\MapEditorUI.cs" />
+    <Compile Include="Assets\Scripts\Map Editor\MapEditorTileMapManger.cs" />
     <Compile Include="Assets\Scriptable Objects\Dice.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -62,12 +64,14 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
+    <Compile Include="Assets\Scripts\CamapaignSetup\CampaignSetupController.cs" />
     <Compile Include="Assets\Scripts\Map\MapUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Scripts\Main Menu\MainMenu.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\Scripts\Map\TileTypes\CustomTileBase.cs" />
     <Compile Include="Assets\Scripts\Map\MapManager.cs" />
     <Compile Include="Assets\Scripts\Units\BaseUnitController.cs" />
     <Compile Include="Assets\Scriptable Objects\Spells\AreaOfEffectSpell.cs" />
@@ -77,9 +81,10 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\VisionTileGOPrefabData.cs" />
+    <Compile Include="Assets\Scripts\CamapaignSetup\CampaignSetupUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
-    <Compile Include="Assets\Scripts\Map\TileMapManager.cs" />
     <Compile Include="Assets\Scripts\Map\TileGallery.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
@@ -87,18 +92,24 @@
     <Compile Include="Assets\Scripts\Map\WallWaypoint.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\Map\MapData.cs" />
-    <Compile Include="Assets\Scripts\Map\TileTypes\SerializableWallTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scriptable Objects\Spells\BaseSpell.cs" />
     <Compile Include="Assets\Scriptable Objects\Units\BaseUnits\BaseUnit.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\Scripts\Map\MapTileMapManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Scripts\Map\TileTypes\PreviewTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\Scripts\Map Editor\TileMapManager.cs" />
+    <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableWallTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\WallTile.cs" />
+    <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableCustomTile.cs" />
+    <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableVisionTile.cs" />
+    <Compile Include="Assets\Scripts\TileMapControl\TileMapGenerator.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <None Include="Library\PackageCache\com.unity.modules.subsystems\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal\package.json" />
@@ -568,16 +579,16 @@
       <HintPath>E:\Apps\6000.0.33f1\Editor\Data\Managed\UnityEngine\UnityEditor.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
-      <HintPath>H:\Projects\Uni\Final Year Project\Project\Board Game Client\DnD Board Client\Library\PackageCache\com.unity.collections\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+      <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.collections\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>H:\Projects\Uni\Final Year Project\Project\Board Game Client\DnD Board Client\Library\PackageCache\com.unity.ext.nunit\net40\unity-custom\nunit.framework.dll</HintPath>
+      <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.ext.nunit\net40\unity-custom\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>H:\Projects\Uni\Final Year Project\Project\Board Game Client\DnD Board Client\Library\PackageCache\com.unity.visualscripting\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.visualscripting\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
-      <HintPath>H:\Projects\Uni\Final Year Project\Project\Board Game Client\DnD Board Client\Library\PackageCache\com.unity.nuget.mono-cecil\Mono.Cecil.dll</HintPath>
+      <HintPath>H:\Projects\Uni\Final Year Project\Project\D-DInteractiveBoard\DnD Board Client\Library\PackageCache\com.unity.nuget.mono-cecil\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>E:\Apps\6000.0.33f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
