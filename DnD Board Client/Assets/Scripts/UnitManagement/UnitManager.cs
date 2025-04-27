@@ -15,8 +15,6 @@ namespace DataObjects.Units
         private void Awake()
         {
             UnitManagerInstance = this;
-            
-            DontDestroyOnLoad(gameObject);
         }
 
         public void InitUnitList(List<IBaseUnit> units)
@@ -60,6 +58,7 @@ namespace DataObjects.Units
 
         public List<IBaseUnit> GetAllUnits()
         {
+            Debug.Log("GetAllUnits");
             return new List<IBaseUnit>(_units);
         }
     }

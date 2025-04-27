@@ -25,11 +25,15 @@ public class CampaignSetupUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("campaign setup ui started");
     }
 
     public void Test()
     {
-        Debug.Log(UnitManager.UnitManagerInstance.GetAllUnits());
+        _campaignSetupController.Test();
+    }
+
+    public void OnMouseDown()
+    {
+        Debug.Log("help");
     }
 }
