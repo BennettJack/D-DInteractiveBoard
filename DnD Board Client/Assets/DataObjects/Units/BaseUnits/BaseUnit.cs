@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using DataObjects.Items.Weapons;
+using UnityEngine;
 
 namespace Scriptable_Objects.Units.BaseUnits
 {
@@ -9,6 +11,7 @@ namespace Scriptable_Objects.Units.BaseUnits
         public string unitType { get; set; }
         public string unitName { get; set; }
         public int moveSpeed { get; private set; }
+        public List<string> weapons { get; private set; }
         
         public int proficiency { get; private set; }
         public int level { get; private set; }

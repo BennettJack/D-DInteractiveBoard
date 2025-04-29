@@ -1,5 +1,7 @@
 using System;
 using DataObjects.Units;
+using DefaultNamespace;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CampaignSetupController : MonoBehaviour
@@ -18,6 +20,11 @@ public class CampaignSetupController : MonoBehaviour
     {
         _unitManager = UnitManager.UnitManagerInstance;
         _campaignSetupUI = CampaignSetupUI.CampaignSetupUiInstance;
+
+       var playerUnitScrollRect = _campaignSetupUI.playerUnitsScrollRect.AddComponent<UnitSelectorController>();
+       
+       var enemyUnitScrollRect = _campaignSetupUI.enemyUnitScrollRect.AddComponent<UnitSelectorController>();
+
     }
 
     // Update is called once per frame

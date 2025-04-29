@@ -36,4 +36,33 @@ public class CampaignSetupUI : MonoBehaviour
     {
         Debug.Log("help");
     }
+
+    public void GenerateSelectorPopup(string contentType)
+    {
+        switch (contentType)
+        {
+            case "playerUnits":
+                GeneratePlayerUnitPopup();
+                break;
+            case "enemyUnits":
+                GenerateEnemyUnitPopup();
+                break;
+            case "maps":
+                GenerateMapPopup();
+                break;
+        }
+    }
+
+    private void GeneratePlayerUnitPopup()
+    {
+        Debug.Log("PlayerUnitPopup");
+    }
+    private void GenerateEnemyUnitPopup()
+    {
+        Debug.Log("EnemyUnitPopup");
+    }
+    private void GenerateMapPopup()
+    {
+        Debug.Log("MapPopup");
+    }
 }

@@ -68,6 +68,7 @@
     <Compile Include="Assets\DataObjects\Race.cs" />
     <Compile Include="Assets\Scripts\Map\SerializableTile.cs" />
     <Compile Include="Assets\Scripts\Map Editor\MapEditorManager.cs" />
+    <Compile Include="Assets\DataObjects\Items\Weapons\IBaseWeapon.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Fighter.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Assets\Scriptable Objects\Spells\AreaOfEffectSpell.cs" />
     <Compile Include="Assets\DataObjects\CampaignData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+    <Compile Include="Assets\DataObjects\Items\Weapons\BaseWeapon.cs" />
     <Compile Include="Assets\Scripts\UnitManagement\UnitFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Wizard.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Assets\Scripts\CamapaignSetup\CampaignSetupUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\UnitSelectorController.cs" />
     <Compile Include="Assets\Scripts\Map\TileGallery.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
