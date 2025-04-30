@@ -3,16 +3,20 @@ using UnityEngine;
 
 namespace DefaultNamespace.CampaignSetup
 {
-    public class SelectorUIPool : MonoBehaviour
+    public class CardUIPool : MonoBehaviour
     {
         public GameObject cardPrefab;
+        public static CardUIPool Instance;
         //This is currently hard coded, but when implemented properly, an awake function
         //can call an API to get the actual count of all units, maps and items etc
         public int poolSize = 100;
         
         private Queue<GameObject> _pool = new();
 
-
+        private void Awake()
+        {   
+            Instance = this;
+        }
         void Start()
         {
             for (int i = 0; i < poolSize; i++)

@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using DataObjects.Units;
 using DefaultNamespace;
-using DefaultNamespace.CampaignSetup;
-using Newtonsoft.Json;
 using Scriptable_Objects.Units.BaseUnits;
-using Scriptable_Objects.Units.BaseUnits.Classes;
 using Unity.VisualScripting;
 using UnityEngine;
-using Wizard = Scriptable_Objects.Units.BaseUnits.Classes.Wizard;
+
 
 public class CampaignSetupController : MonoBehaviour
 {
     public static CampaignSetupController CampaignSetupControllerInstance;
     private UnitManager _unitManager;
     private CampaignSetupUI _campaignSetupUI;
-    public SelectorUIPool selectorUIPool;
     private List<IBaseUnit> _selectedPlayerUnits = new ();
 
     private List<IBaseUnit> _selectedEnemyUnits = new ();

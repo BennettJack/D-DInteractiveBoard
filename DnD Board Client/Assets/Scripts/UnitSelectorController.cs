@@ -1,38 +1,52 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace.CampaignSetup;
+using DefaultNamespace.GenericUI;
 using Scriptable_Objects.Units.BaseUnits;
 using UnityEngine;
 namespace DefaultNamespace
 {
     public class UnitSelectorController : MonoBehaviour
     {
-        public GameObject listCardPrefab;
-        private List<GameObject> _instantiatedButtons;
+        
+        private List<GameObject> _instantiatedCards = new();
         private Transform _parentTransform;
 
         private void Awake()
         {
-            //change this to new prefab later 
-            listCardPrefab = Resources.Load("Prefabs/UIPrefabs/UnitSelectButton") as GameObject;
-            
             Transform[] children = GetComponentsInChildren<Transform>();
             _parentTransform = children.FirstOrDefault( c => c.name == "Content");
-            
         }
         
-        public void PopulateContentPanel(List<GameObject> cards)
+        public void PopulateUnitList(List<ICardData> cardData)
         {
-
-            foreach (var card in cards)
+            ResetCardList();
+            foreach (var card in cardData)
             {
-                Debug.Log(gameObject.name);
-                card.SetActive(true);
+                GameObject cardObject = CardUIPool.Instance.GetCard();
+                cardObject.transform.SetParent(_parentTransform, false);
+                cardObject.SetActive(true);
+
+                var baseNameCard = cardObject.GetComponent<BaseNameCard>();
+                baseNameCard.Setup(card);
+                
+                _instantiatedCards.Add(cardObject);
+                
             }
         }
 
         void SelectUnit(IBaseUnit unit)
         {
             Debug.Log("Selecting unit " + unit.unitName);
+        }
+
+        void ResetCardList()
+        {
+            foreach (var card in _instantiatedCards)
+            {
+                CardUIPool.Instance.ReturnCard(card);
+            }
+            _instantiatedCards.Clear();
         }
     }
 }

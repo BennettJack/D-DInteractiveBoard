@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using DataObjects.Adapters;
 using DataObjects.Units;
+using DefaultNamespace;
 using DefaultNamespace.CampaignSetup;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,7 +69,10 @@ public class CampaignSetupUI : MonoBehaviour
 
     private void GeneratePlayerUnitPopup()
     {
+        var units = UnitManager.UnitManagerInstance.GetAllUnits();
+        var adaptedData = units.Select(u => (ICardData)new UnitDataCardAdapter(u)).ToList();
         selectorPanel.SetActive(true);
+        availableSelectionsScrollRect.GetComponent<UnitSelectorController>().PopulateUnitList(adaptedData);
     }
     private void GenerateEnemyUnitPopup()
     {

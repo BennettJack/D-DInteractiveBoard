@@ -53,6 +53,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableFloorTile.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Sorcerer.cs" />
+    <Compile Include="Assets\DataObjects\Adapters\MapDataCardAdapter.cs" />
     <Compile Include="Assets\Scripts\UnitManagement\UnitLoader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\Commands\SelectCardCommand.cs" />
@@ -119,15 +120,15 @@
     <Compile Include="Assets\Scripts\Map\MapTileMapManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Scripts\UnitManagement\UnitManager.cs" />
-    <Compile Include="Assets\Scripts\CampaignSetup\SelectorUIPool.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\PreviewTile.cs" />
-    <Compile Include="Assets\Scriptable Objects\Databases\UnitDatabase.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Scripts\Commands\ICardCommand.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\Scripts\CampaignSetup\CardUIPool.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Cleric.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Bard.cs" />
+    <Compile Include="Assets\DataObjects\Adapters\UnitDataCardAdapter.cs" />
     <Compile Include="Assets\Scripts\Map Editor\TileMapManager.cs" />
     <Compile Include="Assets\Scripts\CampaignSetup\ICardData.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableWallTile.cs" />
