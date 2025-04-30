@@ -11,6 +11,11 @@ public class CampaignSetupUI : MonoBehaviour
     public ScrollRect playerUnitsScrollRect;
     public ScrollRect friendlyNPCsScrollRect;
     public ScrollRect enemyUnitScrollRect;
+    
+    public ScrollRect availableSelectionsScrollRect;
+    public ScrollRect selectedScrollRect;
+
+    public GameObject selectorPanel;
     private void Awake()
     {
         CampaignSetupUiInstance = this;
