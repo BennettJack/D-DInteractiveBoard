@@ -1,17 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using DataObjects.Units;
 using DefaultNamespace;
+using DefaultNamespace.CampaignSetup;
+using Newtonsoft.Json;
 using Scriptable_Objects.Units.BaseUnits;
+using Scriptable_Objects.Units.BaseUnits.Classes;
 using Unity.VisualScripting;
 using UnityEngine;
+using Wizard = Scriptable_Objects.Units.BaseUnits.Classes.Wizard;
 
 public class CampaignSetupController : MonoBehaviour
 {
     public static CampaignSetupController CampaignSetupControllerInstance;
     private UnitManager _unitManager;
     private CampaignSetupUI _campaignSetupUI;
-
+    public SelectorUIPool selectorUIPool;
     private List<IBaseUnit> _selectedPlayerUnits = new ();
 
     private List<IBaseUnit> _selectedEnemyUnits = new ();
@@ -28,6 +33,8 @@ public class CampaignSetupController : MonoBehaviour
     {
         _unitManager = UnitManager.UnitManagerInstance;
         _campaignSetupUI = CampaignSetupUI.CampaignSetupUiInstance;
+        LoadUnitsFromFile();
+        _unitManager.GetAllUnits();
 
        _campaignSetupUI.playerUnitsScrollRect.AddComponent<UnitSelectorController>();
        _campaignSetupUI.enemyUnitScrollRect.AddComponent<UnitSelectorController>();
@@ -36,7 +43,6 @@ public class CampaignSetupController : MonoBehaviour
        
        _campaignSetupUI.selectorPanel.SetActive(false);
        
-
     }
 
     // Update is called once per frame
@@ -49,5 +55,26 @@ public class CampaignSetupController : MonoBehaviour
     {
         Debug.Log("Test");
         var test =_unitManager.GetAllUnits();
+    }
+
+    public List<IBaseUnit> GetSelectedPlayerUnits()
+    {
+        return _selectedPlayerUnits;
+    }
+    
+    public List<IBaseUnit> GetSelectedEnemyUnits()
+    {
+        return _selectedEnemyUnits;
+    }
+
+    void LoadUnitsFromFile()
+    {
+        var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client";
+
+        var filePath = Path.Combine(documentsLocation, "availableUnits.json");
+        var json = File.ReadAllText(filePath);
+
+        UnitLoader.UnitLoaderInstance.LoadUnits(json);
+
     }
 }

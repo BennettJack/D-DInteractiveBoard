@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using DataObjects.Units;
+using DefaultNamespace.CampaignSetup;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +18,10 @@ public class CampaignSetupUI : MonoBehaviour
     public ScrollRect selectedScrollRect;
 
     public GameObject selectorPanel;
+    private Dictionary<string, GameObject> _selectedPlayerUnitCards = new();
+    private Dictionary<string, GameObject> _selectedMapUnitCards = new();
+    private Dictionary<string, GameObject> _selectedEnemyUnitCards = new();
+    private List<GameObject> _tempActiveCards = new();
     private void Awake()
     {
         CampaignSetupUiInstance = this;
@@ -60,7 +66,7 @@ public class CampaignSetupUI : MonoBehaviour
 
     private void GeneratePlayerUnitPopup()
     {
-        Debug.Log("PlayerUnitPopup");
+        selectorPanel.SetActive(true);
     }
     private void GenerateEnemyUnitPopup()
     {
@@ -69,5 +75,11 @@ public class CampaignSetupUI : MonoBehaviour
     private void GenerateMapPopup()
     {
         Debug.Log("MapPopup");
+    }
+
+    public void UpdatePlayerUnitsScrollRect()
+    {
+        var playerUnits = _campaignSetupController.GetSelectedPlayerUnits();
+
     }
 }

@@ -59,6 +59,10 @@ namespace DataObjects.Units
         public List<IBaseUnit> GetAllUnits()
         {
             Debug.Log("GetAllUnits");
+            foreach (var unit in _units)
+            {
+                Debug.Log(unit.unitName);
+            }
             return new List<IBaseUnit>(_units);
         }
     }
