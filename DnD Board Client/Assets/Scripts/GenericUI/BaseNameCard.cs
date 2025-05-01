@@ -13,6 +13,9 @@ namespace DefaultNamespace.GenericUI
         
         private ICardData _cardData;
         private ICardCommand _command;
+        
+        //TODO - Look into making this a transferable name card
+        private UnitSelectorController _currentController;
 
         public void Setup(ICardData cardData, ICardCommand command)
         {
@@ -34,9 +37,9 @@ namespace DefaultNamespace.GenericUI
             _command = command;
         }
 
-        public void ExecuteCommand()
+        public void OnCardClick()
         {
-            _command.Execute(_cardData);
+            _command?.Execute(_cardData);
         }
     }
 }

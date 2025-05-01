@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using DataObjects.Adapters;
 using DataObjects.Units;
 using DefaultNamespace;
+using DefaultNamespace.CampaignSetup;
+using Newtonsoft.Json.Linq;
 using Scriptable_Objects.Units.BaseUnits;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,6 +16,10 @@ public class CampaignSetupController : MonoBehaviour
 {
     public static CampaignSetupController CampaignSetupControllerInstance;
     private UnitManager _unitManager;
+    
+    private List<IBaseUnit> _playerUnits;
+    private List<IBaseUnit> _enemyUnits;
+    
     private CampaignSetupUI _campaignSetupUI;
     private List<IBaseUnit> _selectedPlayerUnits = new ();
 
@@ -30,15 +38,27 @@ public class CampaignSetupController : MonoBehaviour
         _unitManager = UnitManager.UnitManagerInstance;
         _campaignSetupUI = CampaignSetupUI.CampaignSetupUiInstance;
         LoadUnitsFromFile();
-        _unitManager.GetAllUnits();
 
+        LoadCampaignData();
+        
        _campaignSetupUI.playerUnitsScrollRect.AddComponent<UnitSelectorController>();
        _campaignSetupUI.enemyUnitScrollRect.AddComponent<UnitSelectorController>();
        _campaignSetupUI.availableSelectionsScrollRect.AddComponent<UnitSelectorController>();
        _campaignSetupUI.selectedScrollRect.AddComponent<UnitSelectorController>();
        
-       _campaignSetupUI.selectorPanel.SetActive(false);
+       var playerUnitData = _playerUnits.Select(u => (ICardData)new UnitDataCardAdapter(u)).ToList();
+       _campaignSetupUI.playerUnitsScrollRect.AddComponent<UnitSelectorController>().PopulateUnitList(playerUnitData);
        
+       var enemyUnitData = _enemyUnits.Select(u => (ICardData)new UnitDataCardAdapter(u)).ToList();
+       _campaignSetupUI.enemyUnitScrollRect.AddComponent<UnitSelectorController>().PopulateUnitList(enemyUnitData);
+       _campaignSetupUI.selectorPanel.SetActive(false);
+
+       /*var testCamp = new TestCampaignDataClass();
+       testCamp.CreateTestCampaign();
+
+       var testAvaile = new TestAvailUnitsData();
+       testAvaile.CreateTestAvailUnitsData();*/
+
     }
 
     // Update is called once per frame
@@ -65,12 +85,32 @@ public class CampaignSetupController : MonoBehaviour
 
     void LoadUnitsFromFile()
     {
-        var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client";
+        
+        
+        var testAvailLoc = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client";
+        var testAvailFP = Path.Combine(testAvailLoc, "availableUnits.json");
+        var testAvailJson = File.ReadAllText(testAvailFP);
+        
+        Debug.Log(testAvailJson);
+        UnitLoader.UnitLoaderInstance.LoadUnits(testAvailJson);
 
-        var filePath = Path.Combine(documentsLocation, "availableUnits.json");
+    }
+
+    void LoadCampaignData()
+    {
+        var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client/Campaigns";
+
+        var filePath = Path.Combine(documentsLocation, "Test Campaign.json");
         var json = File.ReadAllText(filePath);
-
-        UnitLoader.UnitLoaderInstance.LoadUnits(json);
+        
+        var campData = JObject.Parse(json);
+        string campaignName = campData["CampaignName"]?.ToString();
+        var maps = campData["Maps"]?.ToString();
+        var playerUnits = campData["PlayerUnits"]?.ToString();
+        var enemyUnits = campData["EnemyUnits"]?.ToString();
+        
+        _playerUnits = UnitLoader.UnitLoaderInstance.ConvertUnits(playerUnits);
+        _enemyUnits = UnitLoader.UnitLoaderInstance.ConvertUnits(enemyUnits);
 
     }
 }

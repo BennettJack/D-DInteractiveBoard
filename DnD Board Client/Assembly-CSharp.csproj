@@ -74,11 +74,13 @@
     <Compile Include="Assets\Scripts\Map Editor\MapEditorManager.cs" />
     <Compile Include="Assets\DataObjects\Items\Weapons\IBaseWeapon.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\Scripts\GenericUI\TransferableNameCard.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Fighter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\Map\MapUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\Scripts\TestAvailUnitsData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Druid.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
@@ -90,7 +92,6 @@
     <Compile Include="Assets\Scripts\Map\MapManager.cs" />
     <Compile Include="Assets\Scripts\Units\BaseUnitController.cs" />
     <Compile Include="Assets\Scriptable Objects\Spells\AreaOfEffectSpell.cs" />
-    <Compile Include="Assets\DataObjects\CampaignData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\DataObjects\Items\Weapons\BaseWeapon.cs" />
     <Compile Include="Assets\Scripts\UnitManagement\UnitFactory.cs" />
@@ -105,8 +106,10 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\UnitSelectorController.cs" />
     <Compile Include="Assets\Scripts\Map\TileGallery.cs" />
+    <Compile Include="Assets\Scripts\TestCampaignDataClass.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\Scripts\Events\CardEvents.cs" />
     <Compile Include="Assets\Scripts\CampaignSetup\CampaignSetupUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Map\WallWaypoint.cs" />
@@ -134,6 +137,7 @@
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableWallTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\WallTile.cs" />
+    <Compile Include="Assets\DataObjects\Campaign\CampaignData.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Warlock.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableCustomTile.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableVisionTile.cs" />

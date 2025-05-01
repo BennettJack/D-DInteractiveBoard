@@ -33,5 +33,21 @@ namespace DataObjects.Units
             
             UnitManager.UnitManagerInstance.InitUnitList(loadedUnits);
         }
+
+        public List<IBaseUnit> ConvertUnits(string json)
+        {
+            var unitData = JsonConvert.DeserializeObject<List<JObject>>(json);
+            var unitsToReturn = new List<IBaseUnit>();
+
+            foreach (var unit in unitData)
+            {
+                if (unit != null)
+                {
+                    unitsToReturn.Add(UnitFactory.CreateUnit(unit));
+                }
+            }
+
+            return unitsToReturn;
+        }
     }
 }

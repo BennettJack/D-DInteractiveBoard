@@ -5,6 +5,7 @@ using DataObjects.Adapters;
 using DataObjects.Units;
 using DefaultNamespace;
 using DefaultNamespace.CampaignSetup;
+using DefaultNamespace.Commands;
 using UnityEngine;
 using UnityEngine.UI;
 
