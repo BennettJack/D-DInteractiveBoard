@@ -63,29 +63,9 @@ public class MapUI : MonoBehaviour
         }
     }
 
-    public void OnStopPlacingUnitsClick()
+    public void OnPlaceEnemyUnitModeClick()
     {
-        _mapManager.StopPlaceUnitMode();
-        StopPlaceMode.gameObject.SetActive(false);
-        PlaceUnitMode.gameObject.SetActive(true);
-    }
-    public void OnPlaceEnemyClick()
-    {
-        _mapManager.PlaceUnit("Enemy");
-        StopPlaceMode.gameObject.SetActive(true);
-        PlaceUnitMode.gameObject.SetActive(false);
-    }
-    public void OnPlaceJackClick()
-    {
-        _mapManager.PlaceUnit("Jack");
-    }
-    public void OnPlaceBethClick()
-    {
-        _mapManager.PlaceUnit("Beth");
-    }
-    public void OnPlaceHarryClick()
-    {
-        _mapManager.PlaceUnit("Harry");
+        
     }
 
     public void OnMoveSpeedUpdate()
