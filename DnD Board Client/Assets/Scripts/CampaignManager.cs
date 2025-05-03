@@ -52,17 +52,5 @@ namespace DefaultNamespace
             }
 
         }
-        public void TestLoaded()
-        {
-            foreach (var playerUnit in playerUnitNames)
-            {
-                Debug.Log(playerUnit);
-            }
-
-            foreach (var enemyUnit in enemyUnitNames)
-            {
-                Debug.Log(enemyUnit);
-            }
-        }
     }
 }

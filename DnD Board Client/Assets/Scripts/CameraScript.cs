@@ -17,9 +17,7 @@ public class CameraScript : MonoBehaviour
         _camera = Camera.main;
         _zoomSpeed = 5f;
     }
-
-    // Update is called once per frame
-    //change all this cos it's just copy paste
+    
     
     bool MouseOverUi()
     {

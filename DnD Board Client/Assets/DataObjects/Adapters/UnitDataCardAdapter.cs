@@ -1,4 +1,5 @@
 ﻿using DefaultNamespace.CampaignSetup;
+using JetBrains.Annotations;
 using Scriptable_Objects.Units.BaseUnits;
 
 namespace DataObjects.Adapters
@@ -11,7 +12,7 @@ namespace DataObjects.Adapters
         {
             _baseUnit = baseUnit;
         }
-
+        
         public int Id => _baseUnit.unitName.GetHashCode();
         public string Name => _baseUnit.unitName;
     }

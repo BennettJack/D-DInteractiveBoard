@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DataObjects.Items.Weapons;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ namespace Scriptable_Objects.Units.BaseUnits
         public int BaseIntelligenceAbilityScore { get;  set; }
         public int BaseWisdomAbilityScore { get;  set; }
         public int BaseCharismaAbilityScore { get;  set; }
+        public int CurrentHitPoints { get;  set; }
+        public int MaxHitPoints { get;  set; }
 
 
         public void SetMoveSpeed(int uMoveSpeed)
@@ -31,6 +34,11 @@ namespace Scriptable_Objects.Units.BaseUnits
         public void SetUnitName(string uName)
         {
             unitName = uName;
+        }
+
+        public int GetAbilityScoreModifier(int baseAbilityScore)
+        {
+            return  (baseAbilityScore - 10) / 2;
         }
         
     }

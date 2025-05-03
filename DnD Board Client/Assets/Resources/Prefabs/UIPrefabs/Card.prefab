@@ -269,7 +269,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2115452874804496058}
           m_TargetAssemblyTypeName: DefaultNamespace.GenericUI.BaseNameCard, Assembly-CSharp
-          m_MethodName: ExecuteCommand
+          m_MethodName: OnCardClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

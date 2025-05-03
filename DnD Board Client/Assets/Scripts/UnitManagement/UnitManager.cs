@@ -57,6 +57,17 @@ namespace DataObjects.Units
             return unit;
         }
 
+        public List<IBaseUnit> GetUnitByName(List<string> unitNames)
+        {
+            List<IBaseUnit> units = new List<IBaseUnit>();
+            foreach (var unitName in unitNames)
+            {
+                units.Add(GetUnitByName(unitName));
+            }
+            
+            return units;
+        }
+
         public List<IBaseUnit> GetAllUnits()
         {
             var units = new List<IBaseUnit>();

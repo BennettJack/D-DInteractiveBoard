@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace.Commands;
 using Scriptable_Objects.Units.BaseUnits;
 using TMPro;
 using Unity.VisualScripting;
@@ -7,53 +8,24 @@ using UnityEngine;
 public class BaseUnitController : MonoBehaviour
 {
     public TMP_Text namePlate;
-    public BaseUnit BaseUnit { get; private set; }
-    public int unitId;
+    public IBaseUnit BaseUnit;
     public Vector3Int position;
-    private MapManager _mapManagerInstance;
     public int movementRemaining;
-    public int movementSpeed;
-
+    public SelectUnitOnMapCommand selectUnitOnMapCommand;
+    
     public SpriteRenderer BodyRenderer;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-    public void Move(){}
 
     private void Awake()
     {
+        selectUnitOnMapCommand = new SelectUnitOnMapCommand();
     }
 
-    private void Start()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public void Move(){}
+    public void OnSelectUnit()
     {
-        _mapManagerInstance = MapManager.MapManagerInstance;
+        Debug.Log(selectUnitOnMapCommand);
+        selectUnitOnMapCommand?.Execute(gameObject);
     }
-
-    void OnMouseDown()
-    {
-        _mapManagerInstance.currentlySelectedUnit = gameObject;
-        _mapManagerInstance.unitSelectDelay = 0f;
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        Debug.Log(other.gameObject.name);
-        Debug.Log("colliding");
-    }
-    public void UpdateVision()
-    {
-        Debug.Log("updateVision");
-
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(new Vector3(transform.position.x, transform.position.y, 0), 1f, transform.forward
-            , 12f, LayerMask.GetMask("Vision"));
-        
-        int count;
-        
-        
-        foreach (RaycastHit2D hit in hits)
-        {
-            Debug.Log(hit.transform.name);
-            
-        }
-        
-    }
+    
 }

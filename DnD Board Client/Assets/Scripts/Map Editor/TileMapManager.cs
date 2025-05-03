@@ -155,6 +155,30 @@ public class TileMapManager : MonoBehaviour
         }
     }
     
+    public void ClearAllTilemaps()
+    {
+        foreach (var tileMap in tileMaps)
+        {
+            var tm = tileMap.Value.GetComponent<Tilemap>();
+            
+            BoundsInt bounds = tm.cellBounds;
+
+            foreach (var coord in bounds.allPositionsWithin)
+            {
+                if (tm.HasTile(coord))
+                {
+                    var tile = tm.GetInstantiatedObject(coord);
+                    if (tile != null)
+                    {
+                        Debug.Log(tile.name);
+                        Destroy(tile);
+                    }
+
+                    tm.SetTile(coord, null);
+                }
+            }
+        }
+    }
     protected void UpdateTileSize()
     {
         groundAndVisionGrid.transform.localScale = new Vector3(tileWidth, tileHeight, 0);

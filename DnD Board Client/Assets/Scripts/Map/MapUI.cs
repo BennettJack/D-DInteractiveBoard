@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using DataObjects.Adapters;
 using DataObjects.Units;
 using DefaultNamespace;
+using DefaultNamespace.CampaignSetup;
+using DefaultNamespace.Commands;
+using Map;
 using Newtonsoft.Json;
 using Scriptable_Objects.Units.BaseUnits;
 using TMPro;
@@ -16,6 +21,11 @@ public class MapUI : MonoBehaviour
     public Button PlaceUnitMode;
     public Button StopPlaceMode;
     public TMP_Dropdown MapSelection;
+    
+    
+    public GameObject UnitSelectionPanel;
+    public GameObject EnemyUnitInfo;
+    public GameObject PlayerUnitInfo;
 
     public static MapUI Instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -56,11 +66,21 @@ public class MapUI : MonoBehaviour
     }
     public void DisplayPlayerUnitList()
     {
-
+        UnitSelectionPanel.SetActive(true);
+        var controller = UnitSelectionPanel.GetComponent<UnitSelectorController>();
+        var playerUnits = UnitManager.UnitManagerInstance.GetUnitByName(CampaignManager.Instance.playerUnitNames);
+        var adaptedData = playerUnits.Select(u => (ICardData)new UnitDataCardAdapter(u)).ToList();
+        controller.PopulateUnitList(adaptedData, new SelectUnitToPlaceCommand());
+        
     }
     public void DisplayEnemyUnitsList()
     {
         
+        UnitSelectionPanel.SetActive(true);
+        var controller = UnitSelectionPanel.GetComponent<UnitSelectorController>();
+        var enemyUnits = UnitManager.UnitManagerInstance.GetUnitByName(CampaignManager.Instance.enemyUnitNames);
+        var adaptedData = enemyUnits.Select(u => (ICardData)new UnitDataCardAdapter(u)).ToList();
+        controller.PopulateUnitList(adaptedData, new SelectUnitToPlaceCommand());
     }
 
     public void ChangeMapSelection(TMP_Dropdown mapSelection)
@@ -73,6 +93,21 @@ public class MapUI : MonoBehaviour
         }
     }
 
+    public void DisplayPlayerUnitInfo(BaseUnit selectedUnit)
+    {
+        if (UnitSelectionPanel.activeSelf)
+        {
+            UnitSelectionPanel.SetActive(false);
+        }
+
+        if (EnemyUnitInfo.activeSelf)
+        {
+            EnemyUnitInfo.SetActive(false);
+        }
+        
+        PlayerUnitInfo.SetActive(true);
+        PlayerUnitInfo.GetComponent<PlayerUnitInfoPanelUI>().UpdatePanel(selectedUnit);
+    }
     public void DestroyUnit()
     {
         _mapManager.DestroySelectedUnit();
