@@ -55,15 +55,15 @@ public class MapManager : MonoBehaviour
     private Vector3 GetMouseWorldPosition()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var tileMapPos = _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>().WorldToCell(mouseWorldPos);
-        return _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>().GetCellCenterWorld(tileMapPos);
+        var tileMapPos = _tileMapManager.tileMaps["ground"].WorldToCell(mouseWorldPos);
+        return _tileMapManager.tileMaps["ground"].GetCellCenterWorld(tileMapPos);
     }
     private Tile GetTileAtMousePosition()
     {
         
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var tileMapPos = _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>().WorldToCell(mouseWorldPos);
-        return _tileMapManager.tileMaps["ground"].GetComponent<Tilemap>().GetTile<Tile>(tileMapPos);
+        var tileMapPos = _tileMapManager.tileMaps["ground"].WorldToCell(mouseWorldPos);
+        return _tileMapManager.tileMaps["ground"].GetTile<Tile>(tileMapPos);
     }
 
     public void DestroySelectedUnit()

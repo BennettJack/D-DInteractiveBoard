@@ -97,7 +97,7 @@ public class MapEditorManager : MonoBehaviour
     private Vector3Int GetMousePosition()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return _tileMapManager.tileMaps["wall"].GetComponent<Tilemap>().WorldToCell(mouseWorldPos);
+        return _tileMapManager.tileMaps["wall"].WorldToCell(mouseWorldPos);
     }
 
     private void Update()
@@ -136,14 +136,14 @@ public class MapEditorManager : MonoBehaviour
                 position = new Vector3Int(1, 1, 0),
                 
             });
-        var bounds = _tileMapManager.tileMaps["wall"].GetComponent<Tilemap>().cellBounds;
+        var bounds = _tileMapManager.tileMaps["wall"].cellBounds;
         
         for (int x = bounds.xMin; x < bounds.xMax; x++)
         {
             for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                WallTile tile = _tileMapManager.tileMaps["wall"].GetComponent<Tilemap>().GetTile<WallTile>(pos);
+                WallTile tile = _tileMapManager.tileMaps["wall"].GetTile<WallTile>(pos);
                 
                 if (tile != null)
                 {

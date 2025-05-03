@@ -15,15 +15,15 @@ namespace Map
         {
             Instance = this;
             _groundTilemap = MapTileMapManager.MapTileMapManagerInstance.tileMaps["GroundTileMap"]
-                .GetComponent<Tilemap>();
+                ;
             _overlayTilemap = MapTileMapManager.MapTileMapManagerInstance.tileMaps["OverlayTileMap"]
-                .GetComponent<Tilemap>();
+                ;
             
         }
 
         public void HighlightTilesInRangeDijkstra(Vector3Int startPos, int maxCost)
         {
-            TileMapManager.Clear
+            
         }
     }
 }

@@ -46,10 +46,10 @@ public class TileMapManager : MonoBehaviour
 
     public void PlaceWallTile(Vector3Int position, WallTile.WallType type)
     {
-        tileMaps["wall"].GetComponent<Tilemap>().SetTile(position, _tileGallery.GetTile("WallTile"));
-        tileMaps["wall"].GetComponent<Tilemap>().SetTileFlags(position, TileFlags.None);
-        tileMaps["wall"].GetComponent<Tilemap>().SetColor(position, Color.blue);
-        tileMaps["wall"].GetComponent<Tilemap>().GetTile<WallTile>(position).SetWallType(type);
+        tileMaps["wall"].SetTile(position, _tileGallery.GetTile("WallTile"));
+        tileMaps["wall"].SetTileFlags(position, TileFlags.None);
+        tileMaps["wall"].SetColor(position, Color.blue);
+        tileMaps["wall"].GetTile<WallTile>(position).SetWallType(type);
 
     }
 
@@ -71,13 +71,13 @@ public class TileMapManager : MonoBehaviour
                         if (j % 2 == 0)
                         {
                             tile.color = Color.white;
-                            tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
+                            tileMaps[tileSetName].SetTile(new Vector3Int(j, i, 0),
                                 tile);
                         }
                         else
                         {
                             tile.color = Color.black;
-                            tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
+                            tileMaps[tileSetName].SetTile(new Vector3Int(j, i, 0),
                                tile);
                         }
                     }
@@ -86,14 +86,14 @@ public class TileMapManager : MonoBehaviour
                         if (j % 2 == 0)
                         {
                             tile.color = Color.black;
-                            tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
+                            tileMaps[tileSetName].SetTile(new Vector3Int(j, i, 0),
                                 tile);
 
                         }
                         else
                         {
                             tile.color = Color.white;
-                            tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0),
+                            tileMaps[tileSetName].SetTile(new Vector3Int(j, i, 0),
                                 tile);
 
 
@@ -106,10 +106,10 @@ public class TileMapManager : MonoBehaviour
                 }
                 else
                 {
-                    tileMaps[tileSetName].GetComponent<Tilemap>().SetTile(new Vector3Int(j, i, 0), _tileGallery.GetTile("Preview"));
+                    tileMaps[tileSetName].SetTile(new Vector3Int(j, i, 0), _tileGallery.GetTile("Preview"));
                 }
 
-                tileMaps[tileSetName].GetComponent<Tilemap>().SetTileFlags(new Vector3Int(j, i, 0), TileFlags.None);
+                tileMaps[tileSetName].SetTileFlags(new Vector3Int(j, i, 0), TileFlags.None);
             }
         }
     }
@@ -120,7 +120,7 @@ public class TileMapManager : MonoBehaviour
     {
         foreach (var tileMap in tileMaps)
         {
-            var tm = tileMap.Value.GetComponent<Tilemap>();
+            var tm = tileMap.Value;
             
             BoundsInt bounds = tm.cellBounds;
 
@@ -165,17 +165,17 @@ public class TileMapManager : MonoBehaviour
         this.verticalTileCount = mapData.VerticalTileCount;
         foreach (var wall in mapData.WallTiles)
         {
-            tileMaps["wall"].GetComponent<Tilemap>().SetTile(wall.position, Resources.Load<WallTile>("Tiles/WallTiles/WallTile"));
-            tileMaps["wall"].GetComponent<Tilemap>().SetTileFlags(wall.position, TileFlags.None);
-            tileMaps["wall"].GetComponent<Tilemap>().SetColor(wall.position, Color.blue);
-            var tile = tileMaps["wall"].GetComponent<Tilemap>().GetTile<WallTile>(wall.position);
+            tileMaps["wall"].SetTile(wall.position, Resources.Load<WallTile>("Tiles/WallTiles/WallTile"));
+            tileMaps["wall"].SetTileFlags(wall.position, TileFlags.None);
+            tileMaps["wall"].SetColor(wall.position, Color.blue);
+            var tile = tileMaps["wall"].GetTile<WallTile>(wall.position);
             tile.SetWallType(WallTile.WallType.FullCover);
             tile.colliderType = Tile.ColliderType.Grid;
         }
         
         //CreateNewTileSet("ground");
         var testMap = _tileMapGenerator.GenerateVisionTileMap( verticalTileCount, horizontalTileCount, 
-            mapData, tileMaps["vision"].GetComponent<Tilemap>());
+            mapData, tileMaps["vision"]);
         UpdateTileSize();
         //SetNeighbours();
         

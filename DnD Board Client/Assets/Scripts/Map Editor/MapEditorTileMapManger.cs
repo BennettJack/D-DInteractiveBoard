@@ -13,12 +13,12 @@ namespace Map_Editor
             MapEditorTileMapMangerInstance = this;
             
             AddTileMapsToDictionary();
-            tileMaps.Add("preview", GameObject.FindGameObjectWithTag("EditorPreviewTileMap"));
+            tileMaps.Add("preview", GameObject.FindGameObjectWithTag("EditorPreviewTileMap").GetComponent<Tilemap>());
         }
         
         void Start()
         {
-            tileMaps["preview"].GetComponent<Tilemap>().color = new Color(255, 255, 255, 0.2f);
+            tileMaps["preview"].color = new Color(255, 255, 255, 0.2f);
             _tileGallery = TileGallery.TileGalleryInstance;
             _tileMapGenerator = TileMapGenerator.TileMapGeneratorInstance;
 
@@ -30,12 +30,12 @@ namespace Map_Editor
             {
                 if (tileMap.Key == tileMapName)
                 {
-                    tileMap.Value.SetActive(true);
-                    tileMap.Value.GetComponent<Tilemap>().color = new Color(255, 255, 255, 0.2f);
+                    tileMap.Value.transform.parent.gameObject.SetActive(true);
+                    tileMap.Value.color = new Color(255, 255, 255, 0.2f);
                 }
                 else
                 {
-                    tileMap.Value.SetActive(false);
+                    tileMap.Value.transform.parent.gameObject.SetActive(false);
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace Map_Editor
             horizontalTileCount = hTileCount;
             foreach (var tileMap in tileMaps)
             {
-                tileMap.Value.GetComponent<Tilemap>().ClearAllTiles();
+                tileMap.Value.ClearAllTiles();
             }
             CreateNewTileSet("preview");
         }

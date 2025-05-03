@@ -54,6 +54,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableFloorTile.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Sorcerer.cs" />
+    <Compile Include="Assets\Scripts\Map\TileTypes\TilemapTypes.cs" />
     <Compile Include="Assets\DataObjects\Adapters\MapDataCardAdapter.cs" />
     <Compile Include="Assets\Scripts\UnitManagement\UnitLoader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
