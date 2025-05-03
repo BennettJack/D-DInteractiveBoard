@@ -57,6 +57,7 @@
     <Compile Include="Assets\Scripts\UnitManagement\UnitLoader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\Commands\SelectCardCommand.cs" />
+    <Compile Include="Assets\Scripts\CampaignManager.cs" />
     <Compile Include="Assets\Scripts\CampaignSetup\CampaignSetupController.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\IBaseUnit.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\BaseUnit.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Assets\DataObjects\Items\Weapons\BaseWeapon.cs" />
     <Compile Include="Assets\Scripts\UnitManagement\UnitFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\Scripts\CampaignLoader.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Wizard.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />

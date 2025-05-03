@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using DataObjects.Units;
+using DefaultNamespace;
 using Map;
+using Scriptable_Objects.Units.BaseUnits.Classes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,7 +21,7 @@ public class MapManager : MonoBehaviour
     public GameObject currentlySelectedUnit;
     
     private Tile _previousTile;
-
+    private string _currentlySelectedMapFileName;
     private Vector3Int _previousTilePosition;
 
     private bool _placeUnitMode;
@@ -29,6 +33,8 @@ public class MapManager : MonoBehaviour
     private MapData mapData;
     public float unitSelectDelayThreshold = 1f;
     public float unitSelectDelay = 0f;
+    
+    private MapData _currentMapData;
     public void Awake()
     {
         MapManagerInstance = this;
@@ -47,7 +53,9 @@ public class MapManager : MonoBehaviour
     public void Start()
     {
         _tileMapManager = MapTileMapManager.MapTileMapManagerInstance;
-        LoadMapFromFile();
+        CampaignLoader.Instance.LoadCampaignData("Test Campaign.json");
+        MapUI.Instance.PopulateMapsDropDown(CampaignManager.Instance.mapFileNames);
+        
     }
 
     private Vector3Int GetMousePosition()
@@ -137,23 +145,55 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void LoadMapFromFile()
+    public void LoadMapFromFile(string mapFileName)
     {
+        ClearAllTilemaps();
         var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client/Maps";
-        var filePath = Path.Combine(documentsLocation, "IMG_4164.json");
+        var filePath = Path.Combine(documentsLocation, mapFileName + ".json");
+        if (File.Exists(filePath))
+        {
+            var json = File.ReadAllText(filePath);
+            mapData = JsonUtility.FromJson<MapData>(json);
 
-        var json = File.ReadAllText(filePath);
-        mapData = JsonUtility.FromJson<MapData>(json);
-        
-        
-        var sprite = Resources.Load<Sprite>(mapData.MapFileName);
-        mapSpriteRenderer.sprite = sprite;
-        mapSpriteRenderer.transform.position = new Vector3(0, 0, 5);
-        
-        bottomLeftCorner = mapSpriteRenderer.transform.TransformPoint(mapSpriteRenderer.sprite.bounds.min);
 
-        _tileMapManager.LoadFromData(mapData);
-        _tileMapManager.SnapToMapImage(bottomLeftCorner);
+            var sprite = Resources.Load<Sprite>(mapData.MapFileName);
+            mapSpriteRenderer.sprite = sprite;
+            mapSpriteRenderer.transform.position = new Vector3(0, 0, 5);
+
+            bottomLeftCorner = mapSpriteRenderer.transform.TransformPoint(mapSpriteRenderer.sprite.bounds.min);
+
+            _tileMapManager.LoadFromData(mapData);
+            _tileMapManager.SnapToMapImage(bottomLeftCorner);
+        }
+    }
+
+    void ClearAllTilemaps()
+    {
+        foreach (var tileMap in _tileMapManager.tileMaps)
+        {
+            var tm = tileMap.Value.GetComponent<Tilemap>();
+            
+            BoundsInt bounds = tm.cellBounds;
+
+            foreach (var coord in bounds.allPositionsWithin)
+            {
+                if (tm.HasTile(coord))
+                {
+                    var tile = tm.GetInstantiatedObject(coord);
+                    if (tile != null)
+                    {
+                        Debug.Log(tile.name);
+                        Destroy(tile);
+                    }
+
+                    tm.SetTile(coord, null);
+                }
+            }
+        }
+    }
+    public void ChangeCurrentMap(string mapFileName)
+    {
+        
     }
     
 }

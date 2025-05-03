@@ -14,7 +14,7 @@ public class VisionTile : CustomTileBase
         DiscoveredBy.Add(characterName);
     }
     
-    public override bool StartUp(Vector3Int pos, ITilemap tilemap, GameObject go)
+    /*public override bool StartUp(Vector3Int pos, ITilemap tilemap, GameObject go)
     {
         if (prefab != null && go == null)
         {
@@ -26,5 +26,5 @@ public class VisionTile : CustomTileBase
         }
 
         return base.StartUp(position, tilemap, go);
-    }
+    }*/
 }

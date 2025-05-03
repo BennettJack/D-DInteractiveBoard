@@ -9,7 +9,6 @@ namespace DataObjects.Units
     {
         public static UnitManager UnitManagerInstance;
         
-        private List<IBaseUnit> _units = new();
         private Dictionary<string, IBaseUnit> _unitLookup = new();
 
         private void Awake()
@@ -17,33 +16,35 @@ namespace DataObjects.Units
             UnitManagerInstance = this;
         }
 
-        public void InitUnitList(List<IBaseUnit> units)
-        {
-            _units = units;
-            _unitLookup.Clear();
-            foreach (var unit in _units)
-            {
-                if (!_unitLookup.TryAdd(unit.unitName, unit))
-                {
-                    Debug.LogError($"Failed to add unit {unit.unitName}");
-                }
-            }
-        }
-
         public void AddUnit(IBaseUnit unitToAdd)
         {
-            foreach (var unit in _units)
-            {
-                if (!_unitLookup.TryAdd(unit.unitName, unit))
+                try
                 {
-                    Debug.LogError($"Failed to add unit {unit.unitName}");
+                    _unitLookup.TryAdd(unitToAdd.unitName, unitToAdd);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+        }
+        
+        public void AddUnits(List<IBaseUnit> units)
+        {
+            foreach (var unit in units)
+            {
+                try
+                {
+                    _unitLookup.TryAdd(unit.unitName, unit);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
                 }
             }
         }
 
         public void RemoveUnit(IBaseUnit unit)
         {
-            _units.Remove(unit);
             if (_unitLookup.ContainsKey(unit.unitName))
             {
                 _unitLookup.Remove(unit.unitName);
@@ -58,12 +59,13 @@ namespace DataObjects.Units
 
         public List<IBaseUnit> GetAllUnits()
         {
+            var units = new List<IBaseUnit>();
             Debug.Log("GetAllUnits");
-            foreach (var unit in _units)
+            foreach (var unit in _unitLookup)
             {
-                Debug.Log(unit.unitName);
+                units.Add(unit.Value);
             }
-            return new List<IBaseUnit>(_units);
+            return new List<IBaseUnit>(units);
         }
     }
 }

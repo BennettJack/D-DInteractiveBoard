@@ -31,7 +31,7 @@ namespace DataObjects.Units
                 }
             }
             
-            UnitManager.UnitManagerInstance.InitUnitList(loadedUnits);
+            UnitManager.UnitManagerInstance.AddUnits(loadedUnits);
         }
 
         public List<IBaseUnit> ConvertUnits(string json)

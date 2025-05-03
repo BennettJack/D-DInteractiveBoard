@@ -10,17 +10,17 @@ namespace Scriptable_Objects.Units.BaseUnits
         public string unitID;
         public string unitType { get; set; }
         public string unitName { get; set; }
-        public int moveSpeed { get; private set; }
-        public List<string> weapons { get; private set; }
+        public int moveSpeed { get;  set; }
+        public List<string> weapons { get;  set; }
         
-        public int proficiency { get; private set; }
-        public int level { get; private set; }
-        public int BaseStrengthAbilityScore { get; private set; }
-        public int BaseDexterityAbilityScore { get; private set; }
-        public int BaseConstitutionAbilityScore { get; private set; }
-        public int BaseIntelligenceAbilityScore { get; private set; }
-        public int BaseWisdomAbilityScore { get; private set; }
-        public int BaseCharismaAbilityScore { get; private set; }
+        public int proficiency { get;  set; }
+        public int level { get;  set; }
+        public int BaseStrengthAbilityScore { get;  set; }
+        public int BaseDexterityAbilityScore { get;  set; }
+        public int BaseConstitutionAbilityScore { get;  set; }
+        public int BaseIntelligenceAbilityScore { get;  set; }
+        public int BaseWisdomAbilityScore { get;  set; }
+        public int BaseCharismaAbilityScore { get;  set; }
 
 
         public void SetMoveSpeed(int uMoveSpeed)

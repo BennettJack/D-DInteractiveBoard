@@ -18,17 +18,7 @@ namespace DefaultNamespace
             campaignData.PlayerUnits = new();
             campaignData.EnemyUnits = new();
             campaignData.CampaignName = "Test Campaign";
-            var map1 = new MapData()
-            {
-                MapFileName = "Map1"
-            };
             
-            var map2 = new MapData()
-            {
-                MapFileName = "MapTwooooo"
-            };
-
-
             var tony = new Wizard()
             {
                 unitType = "Wizard",
@@ -95,8 +85,10 @@ namespace DefaultNamespace
                 unitName = "BBEG",
             };
             
-            campaignData.Maps.Add(map1);
-            campaignData.Maps.Add(map2);
+            campaignData.Maps.Add("bigmap");
+            campaignData.Maps.Add("bigmap2");
+            campaignData.Maps.Add("Dotmm");
+            campaignData.Maps.Add("IMG_4164");
             campaignData.PlayerUnits.Add(tony);
             campaignData.PlayerUnits.Add(vlad);
             campaignData.PlayerUnits.Add(daisy);

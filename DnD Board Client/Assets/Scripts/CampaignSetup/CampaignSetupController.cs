@@ -16,7 +16,7 @@ public class CampaignSetupController : MonoBehaviour
 {
     public static CampaignSetupController CampaignSetupControllerInstance;
     private UnitManager _unitManager;
-    
+    private CampaignLoader _campaignLoader;
     private List<IBaseUnit> _playerUnits;
     private List<IBaseUnit> _enemyUnits;
     
@@ -37,9 +37,16 @@ public class CampaignSetupController : MonoBehaviour
     {
         _unitManager = UnitManager.UnitManagerInstance;
         _campaignSetupUI = CampaignSetupUI.CampaignSetupUiInstance;
+        _campaignLoader = CampaignLoader.Instance;
         LoadUnitsFromFile();
 
-        LoadCampaignData();
+        /*CampaignLoader campLoader = new CampaignLoader();
+        var campData = campLoader.LoadCampaignData("Test Campaign.json");
+        
+       
+        
+        _playerUnits = UnitLoader.UnitLoaderInstance.ConvertUnits(playerUnits);
+        _enemyUnits = UnitLoader.UnitLoaderInstance.ConvertUnits(enemyUnits);*/
         
        _campaignSetupUI.playerUnitsScrollRect.AddComponent<UnitSelectorController>();
        _campaignSetupUI.enemyUnitScrollRect.AddComponent<UnitSelectorController>();
@@ -52,13 +59,6 @@ public class CampaignSetupController : MonoBehaviour
        var enemyUnitData = _enemyUnits.Select(u => (ICardData)new UnitDataCardAdapter(u)).ToList();
        _campaignSetupUI.enemyUnitScrollRect.AddComponent<UnitSelectorController>().PopulateUnitList(enemyUnitData);
        _campaignSetupUI.selectorPanel.SetActive(false);
-
-       /*var testCamp = new TestCampaignDataClass();
-       testCamp.CreateTestCampaign();
-
-       var testAvaile = new TestAvailUnitsData();
-       testAvaile.CreateTestAvailUnitsData();*/
-
     }
 
     // Update is called once per frame
@@ -93,24 +93,6 @@ public class CampaignSetupController : MonoBehaviour
         
         Debug.Log(testAvailJson);
         UnitLoader.UnitLoaderInstance.LoadUnits(testAvailJson);
-
-    }
-
-    void LoadCampaignData()
-    {
-        var documentsLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/DnD Board Client/Campaigns";
-
-        var filePath = Path.Combine(documentsLocation, "Test Campaign.json");
-        var json = File.ReadAllText(filePath);
-        
-        var campData = JObject.Parse(json);
-        string campaignName = campData["CampaignName"]?.ToString();
-        var maps = campData["Maps"]?.ToString();
-        var playerUnits = campData["PlayerUnits"]?.ToString();
-        var enemyUnits = campData["EnemyUnits"]?.ToString();
-        
-        _playerUnits = UnitLoader.UnitLoaderInstance.ConvertUnits(playerUnits);
-        _enemyUnits = UnitLoader.UnitLoaderInstance.ConvertUnits(enemyUnits);
 
     }
 }
