@@ -11,14 +11,9 @@ public class BaseUnitController : MonoBehaviour
     public IBaseUnit BaseUnit;
     public Vector3Int position;
     public int movementRemaining;
-    public SelectUnitOnMapCommand selectUnitOnMapCommand;
+    public IUnitCommand selectUnitOnMapCommand;
     
     public SpriteRenderer BodyRenderer;
-
-    private void Awake()
-    {
-        selectUnitOnMapCommand = new SelectUnitOnMapCommand();
-    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Move(){}

@@ -108,6 +108,22 @@ public class MapUI : MonoBehaviour
         PlayerUnitInfo.SetActive(true);
         PlayerUnitInfo.GetComponent<PlayerUnitInfoPanelUI>().UpdatePanel(selectedUnit);
     }
+
+    public void DisplayEnemyUnitInfo(BaseUnit selectedUnit)
+    {
+        if (UnitSelectionPanel.activeSelf)
+        {
+            UnitSelectionPanel.SetActive(false);
+        }
+
+        if (EnemyUnitInfo.activeSelf)
+        {
+            PlayerUnitInfo.SetActive(false);
+        }
+        
+        EnemyUnitInfo.SetActive(true);
+        
+    }
     public void DestroyUnit()
     {
         _mapManager.DestroySelectedUnit();

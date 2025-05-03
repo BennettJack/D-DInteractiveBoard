@@ -7,9 +7,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
+
 public class TileMapManager : MonoBehaviour
 {
-    public Dictionary<string, GameObject> tileMaps { get; protected set; } = new();
+    public Dictionary<string, Tilemap> tileMaps { get; protected set; } = new();
     public Grid groundAndVisionGrid;
     public Grid wallGrid;
     protected TileGallery _tileGallery;
@@ -26,12 +27,13 @@ public class TileMapManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     
+    
     protected void AddTileMapsToDictionary()
     {
-        tileMaps.Add("vision", GameObject.FindGameObjectWithTag("VisionTileMap"));
-        tileMaps.Add("ground", GameObject.FindGameObjectWithTag("GroundTileMap"));
-        tileMaps.Add("wall", GameObject.FindGameObjectWithTag("WallTileMap"));
-        tileMaps.Add("overlay", GameObject.FindGameObjectWithTag("OverlayTileMap"));
+        tileMaps.Add("vision", GameObject.FindGameObjectWithTag("VisionTileMap").GetComponent<Tilemap>());
+        tileMaps.Add("ground", GameObject.FindGameObjectWithTag("GroundTileMap").GetComponent<Tilemap>());
+        tileMaps.Add("wall", GameObject.FindGameObjectWithTag("WallTileMap").GetComponent<Tilemap>());
+        tileMaps.Add("overlay", GameObject.FindGameObjectWithTag("OverlayTileMap").GetComponent<Tilemap>());
     }
     public void SnapToMapImage(Vector3 position)
     {
@@ -112,48 +114,7 @@ public class TileMapManager : MonoBehaviour
         }
     }
 
-    private void SetNeighbours()
-    {
-        foreach (var tileMap in tileMaps)
-        {
-            Debug.Log(tileMap.Key);
-            {
-                if(tileMap.Key != "wall"){
-                    for (int i = 0; i < verticalTileCount; i++)
-                    {
-                        for (int j = 0; j < horizontalTileCount; j++)
-                        {
-                            var tile = tileMap.Value.GetComponent<Tilemap>()
-                                .GetTile<CustomTileBase>(new Vector3Int(j, i, 0));
-                            if (i - 1 > 0)
-                            {
-                                tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>()
-                                    .GetTile<CustomTileBase>(new Vector3Int(j, i - 1, 0)));
-                            }
-
-                            if (i + 1 < horizontalTileCount)
-                            {
-                                tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>()
-                                    .GetTile<CustomTileBase>(new Vector3Int(j, i + 1, 0)));
-                            }
-
-                            if (j - 1 > 0)
-                            {
-                                tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>()
-                                    .GetTile<CustomTileBase>(new Vector3Int(j - 1, 0)));
-                            }
-
-                            if (j + 1 < horizontalTileCount)
-                            {
-                                tile.Neighbors.Add(tileMap.Value.GetComponent<Tilemap>()
-                                    .GetTile<CustomTileBase>(new Vector3Int(j + 1, i, 0)));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    
     
     public void ClearAllTilemaps()
     {
@@ -177,6 +138,16 @@ public class TileMapManager : MonoBehaviour
                     tm.SetTile(coord, null);
                 }
             }
+        }
+    }
+
+    public void ClearTileMap(TilemapTypes type)
+    {
+        Tilemap tileMap = null;
+        switch (type)
+        {
+            case TilemapTypes.Ground:
+                break;
         }
     }
     protected void UpdateTileSize()
@@ -209,4 +180,6 @@ public class TileMapManager : MonoBehaviour
         //SetNeighbours();
         
     }
+    
+    
 }

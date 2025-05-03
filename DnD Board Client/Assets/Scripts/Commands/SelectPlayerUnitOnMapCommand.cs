@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DefaultNamespace.Commands
 {
-    public class SelectUnitOnMapCommand : IUnitCommand
+    public class SelectPlayerUnitOnMapCommand : IUnitCommand
     {
         public void Execute(GameObject unit)
         {

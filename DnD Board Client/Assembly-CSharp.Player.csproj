@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Map\TileTypes\FloorTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\Scripts\Map\TileTypes\MovementTile.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\DataObjects\Units\BaseUnits\Classes\Barbarian.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Assets\Scripts\Map\SerializableTile.cs" />
     <Compile Include="Assets\Scripts\Map Editor\MapEditorManager.cs" />
     <Compile Include="Assets\DataObjects\Items\Weapons\IBaseWeapon.cs" />
-    <Compile Include="Assets\Scripts\Commands\SelectUnitOnMapCommand.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\GenericUI\TransferableNameCard.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
@@ -111,8 +111,10 @@
     <Compile Include="Assets\Scripts\UnitSelectorController.cs" />
     <Compile Include="Assets\Scripts\Map\TileGallery.cs" />
     <Compile Include="Assets\Scripts\TestCampaignDataClass.cs" />
+    <Compile Include="Assets\Scripts\Commands\SelectEnemyUnitOnMapCommand.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\Scripts\Map\MovementManager.cs" />
     <Compile Include="Assets\Scripts\Events\CardEvents.cs" />
     <Compile Include="Assets\Scripts\CampaignSetup\CampaignSetupUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Assets\Scripts\Map Editor\TileMapManager.cs" />
     <Compile Include="Assets\Scripts\CampaignSetup\ICardData.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\SerializableTiles\SerializableWallTile.cs" />
+    <Compile Include="Assets\Scripts\Commands\SelectPlayerUnitOnMapCommand.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scripts\Map\TileTypes\WallTile.cs" />
     <Compile Include="Assets\DataObjects\Campaign\CampaignData.cs" />

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using DataObjects.Units;
 using DefaultNamespace;
+using DefaultNamespace.Commands;
 using Map;
 using Scriptable_Objects.Units.BaseUnits;
 using Scriptable_Objects.Units.BaseUnits.Classes;
@@ -112,6 +113,7 @@ public class MapManager : MonoBehaviour
         if (CampaignManager.Instance.playerUnitNames.Contains(unitToPlace.unitName))
         {
             unit.GetComponent<BaseUnitController>().namePlate.text = unitToPlace.unitName;
+            unit.GetComponent<BaseUnitController>().selectUnitOnMapCommand = new SelectPlayerUnitOnMapCommand();
             instantiatedPlayerUnits.Add(unit);
             unitToPlace = null;
         }
@@ -119,6 +121,7 @@ public class MapManager : MonoBehaviour
         {
             instantiatedEnemyUnits.Add(unit);
             unit.GetComponent<BaseUnitController>().BodyRenderer.color = Color.red;
+            unit.GetComponent<BaseUnitController>().selectUnitOnMapCommand = new SelectEnemyUnitOnMapCommand();
             var unitsWithName = instantiatedEnemyUnits.Count(u => u.GetComponent<BaseUnitController>().BaseUnit.unitName == unitToPlace.unitName);
             if (unitsWithName == 1)
             {

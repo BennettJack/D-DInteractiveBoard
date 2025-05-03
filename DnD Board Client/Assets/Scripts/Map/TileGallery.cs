@@ -20,10 +20,10 @@ public class TileGallery : MonoBehaviour
 
         
         _tiles.Add("Preview", Resources.Load<PreviewTile>("Tiles/PreviewTile"));
-        
         _tiles.Add("NoVision", Resources.Load<VisionTile>("Tiles/VisionTiles/NoVision"));
         _tiles.Add("FullVision", Resources.Load<VisionTile>("Tiles/VisionTiles/FullVision"));
         _tiles.Add("WallTile", Resources.Load<WallTile>("Tiles/WallTiles/WallTile"));
+        _tiles.Add("MovementOverlay", Resources.Load<MovementTile>("Tiles/OverlayTiles/MovementOverlayTile"));
     }
 
     public CustomTileBase GetTile(string key)
