@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using Map.TileTypes;
 using TileMapControl;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 

@@ -57,6 +57,7 @@
     <Compile Include="Assets\Scripts\Map\TileTypes\TilemapTypes.cs" />
     <Compile Include="Assets\DataObjects\Adapters\MapDataCardAdapter.cs" />
     <Compile Include="Assets\Scripts\UnitManagement\UnitLoader.cs" />
+    <Compile Include="Assets\Scripts\TurnBasedScripts\UnitTurn.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\Commands\SelectCardCommand.cs" />
     <Compile Include="Assets\Scripts\CampaignManager.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Assets\Scripts\UnitSelectorController.cs" />
     <Compile Include="Assets\Scripts\Map\TileGallery.cs" />
     <Compile Include="Assets\Scripts\TestCampaignDataClass.cs" />
+    <Compile Include="Assets\Scripts\TurnBasedScripts\TurnBasedModeManager.cs" />
     <Compile Include="Assets\Scripts\Commands\SelectEnemyUnitOnMapCommand.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />

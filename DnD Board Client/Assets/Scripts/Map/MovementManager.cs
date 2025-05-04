@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Map.TileTypes;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,133 +12,165 @@ namespace Map
         private Tilemap _groundTilemap;
         private Tilemap _overlayTilemap;
         private Tilemap _wallTilemap;
-
+        
         void Awake()
         {
             Instance = this;
-
-            
         }
 
         private void Start()
         {
             _groundTilemap = MapTileMapManager.MapTileMapManagerInstance.tileMaps["ground"];
             _overlayTilemap = MapTileMapManager.MapTileMapManagerInstance.tileMaps["overlay"];
-            _wallTilemap = MapTileMapManager.MapTileMapManagerInstance.tileMaps["wall"];
         }
-
+        
+        
+        
+        
+        //Using Dijkstra's algorithm to check what tiles can be accessed
         public Dictionary<Vector3Int, int> GetReachableTiles(Vector3Int start, int maxCost)
         {
-            var reachable = new Dictionary<Vector3Int, int>();
-            var costSoFar = new Dictionary<Vector3Int, int>();
-            var queue = new Queue<Vector3Int>();
+            //Stores locations nd their costs
+            var costMap = new Dictionary<Vector3Int, int>();
+            
+            var visited = new HashSet<Vector3Int>();
 
-            queue.Enqueue(start);
-            costSoFar[start] = 0;
+            var priorityQueue = new PriorityQueue<Vector3Int>();
+            priorityQueue.Enqueue(start, 0);
+            costMap[start] = 0;
 
-            while (queue.Count > 0)
+            while (priorityQueue.Count > 0)
             {
-                Vector3Int current = queue.Dequeue();
-                int currentCost = costSoFar[current];
+                var current = priorityQueue.Dequeue();
+                if (visited.Contains(current)) continue;
 
-                if (!IsValidGroundTile(start, current))
+                visited.Add(current);
+                int currentCost = costMap[current];
+
+                if (!IsValidGroundTile(current))
                     continue;
 
-                reachable[current] = currentCost;
-                _overlayTilemap.SetTile(current, TileGallery.TileGalleryInstance.GetTile("MovementOverlay"));
-
-                foreach (Vector3Int neighbor in GetNeighbors(current))
+                if (currentCost != 0)
                 {
-                    if (!IsValidGroundTile(current, neighbor))
+                    _overlayTilemap.SetTile(current, TileGallery.TileGalleryInstance.GetTile("MovementOverlay"));
+                }
+
+                foreach (Vector3Int neighbour in GetNeighbours(current))
+                {
+                    if (!IsValidGroundTile(neighbour))
                         continue;
 
-                    int moveCost = _groundTilemap.GetTile<FloorTile>(neighbor).MovementCost;
+                    if (IsDiagonal(current, neighbour))
+                    {
+                        var stepX = new Vector3Int(current.x, neighbour.y, 0);
+                        var stepY = new Vector3Int(neighbour.x, current.y, 0);
+
+                        if (!IsValidGroundTile(stepX) || !IsValidGroundTile(stepY))
+                            continue;
+                    }
+
+                    int moveCost = _groundTilemap.GetTile<FloorTile>(neighbour).MovementCost;
                     int newCost = currentCost + moveCost;
 
                     if (newCost > maxCost)
                         continue;
 
-                    if (!costSoFar.ContainsKey(neighbor) || newCost < costSoFar[neighbor])
+                    // Only enqueue if the new cost is better or the tile hasn't been visited
+                    if (!costMap.ContainsKey(neighbour) || newCost < costMap[neighbour])
                     {
-                        costSoFar[neighbor] = newCost;
-                        queue.Enqueue(neighbor);
+                        costMap[neighbour] = newCost;
+                        priorityQueue.Enqueue(neighbour, newCost);
                     }
                 }
             }
 
-            return reachable;
+            return costMap;
         }
         
-        List<Vector3Int> GetNeighbors(Vector3Int pos)
+        
+        //Gets the positions of neighbours
+        List<Vector3Int> GetNeighbours(Vector3Int position)
         {
-            var dirs = new List<Vector3Int>
+            var directions = new List<Vector3Int>
             {
-                new Vector3Int(1, 0, 0),
-                new Vector3Int(-1, 0, 0),
-                new Vector3Int(0, 1, 0),
-                new Vector3Int(0, -1, 0),
-                new Vector3Int(1, 1, 0),
-                new Vector3Int(1, -1, 0),
-                new Vector3Int(-1, 1, 0),
-                new Vector3Int(-1, -1, 0)
+                new (1, 0, 0),
+                new (-1, 0, 0),
+                new (0, 1, 0),
+                new (0, -1, 0),
+                new (1, 1, 0),
+                new (1, -1, 0),
+                new (-1, 1, 0),
+                new (-1, -1, 0)
             };
 
-            return dirs.Select(d => pos + d).ToList();
+            return directions.Select(direction => position + direction).ToList();
         }
-        private bool IsValidGroundTile(Vector3Int from, Vector3Int to)
+        
+        //Checks to see if the tile is a valid ground tile to move to
+        private bool IsValidGroundTile(Vector3Int tile)
         {
-            if (!_groundTilemap.HasTile(to))
+            //If out of bounds
+            if (!_groundTilemap.HasTile(tile))
             {
-                Debug.Log("thi should never proc");
                 return false;
             }
-
-            if (IsDiagonal(from, to))
-            {
-                var stepX = new Vector3Int(to.x, from.y, 0);
-                var stepY = new Vector3Int(from.x, to.y, 0);
-                if (!IsValidGroundTile(from, stepX) && !IsValidGroundTile(from, stepY))
-                {
-                    Debug.Log($"Blocked diagonal from {from} to {to} — stepX and stepY both blocked.");
-                    _overlayTilemap.SetTile(to, TileGallery.TileGalleryInstance.GetTile("BlockedOverlay"));
-                    return false;
-                }
-            }
-
-            Vector3 worldPos = _groundTilemap.GetCellCenterWorld(to);
-
-// Calculate the 4 positions in wall tilemap space
-            Vector3 halfCell = _groundTilemap.cellSize / 2f;
-            Vector3[] corners = new Vector3[]
-            {
-                worldPos + new Vector3(-halfCell.x / 2f, -halfCell.y / 2f),
-                worldPos + new Vector3(-halfCell.x / 2f,  halfCell.y / 2f),
-                worldPos + new Vector3( halfCell.x / 2f, -halfCell.y / 2f),
-                worldPos + new Vector3( halfCell.x / 2f,  halfCell.y / 2f),
-            };
-
-            int wallCount = 0;
-            foreach (var corner in corners)
-            {
-                Vector3Int wallCell = _wallTilemap.WorldToCell(corner);
-                if (_wallTilemap.HasTile(wallCell))
-                {
-                    wallCount++;
-                    if (wallCount > 1)
-                    {
-                        Debug.Log($"Blocked {from} to {to} because 2+ wall tiles found in ground tile");
-                        return false;
-                    }
-                }
-            }
-
-            return true;
+            
+            //Gets the bounds of the current tile in world space
+            Bounds bounds = new Bounds(
+                _groundTilemap.GetCellCenterWorld(tile),
+                _groundTilemap.cellSize
+            );
+            
+            //Fires a box off centred on the player.
+            //Size uses the tile size
+            var hits = Physics2D.OverlapBoxAll(
+                bounds.center,
+                new Vector2(MapTileMapManager.MapTileMapManagerInstance.tileHeight, MapTileMapManager.MapTileMapManagerInstance.tileWidth) *0.8f,
+                0f,
+                LayerMask.GetMask("Walls")
+            );
+            
+            //If there's one or fewer wall tiles hit by the collider box, return true
+            return hits.Length <= 1;
         }
         
         
         private bool IsDiagonal(Vector3Int from, Vector3Int to)
         {
             return from.x != to.x && from.y != to.y;
+        }
+        
+        
+        //Debug, yes I know this is chatgpt generated but it saved time
+        public void DebugDrawTileCheck(Vector3Int tilePos)
+        {
+            Vector3 center = _groundTilemap.GetCellCenterWorld(tilePos);
+            Vector2 size = new Vector2(MapTileMapManager.MapTileMapManagerInstance.tileHeight,
+                MapTileMapManager.MapTileMapManagerInstance.tileWidth) *0.8f ;
+
+            // Optional: Check how many colliders are inside
+            Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f, LayerMask.GetMask("Walls"));
+
+            // Color depending on hit count
+            Color boxColor = hits.Length > 1 ? Color.red : (hits.Length == 1 ? Color.yellow : Color.green);
+
+            // Corners of the box
+            Vector3 topLeft     = center + new Vector3(-size.x / 2, size.y / 2);
+            Vector3 topRight    = center + new Vector3(size.x / 2, size.y / 2);
+            Vector3 bottomLeft  = center + new Vector3(-size.x / 2, -size.y / 2);
+            Vector3 bottomRight = center + new Vector3(size.x / 2, -size.y / 2);
+
+            // Draw box
+            Debug.DrawLine(topLeft, topRight, boxColor, 200f);
+            Debug.DrawLine(topRight, bottomRight, boxColor, 200f);
+            Debug.DrawLine(bottomRight, bottomLeft, boxColor, 200f);
+            Debug.DrawLine(bottomLeft, topLeft, boxColor, 200f);
+
+            // Optional: print hit info
+            if (hits.Length > 0)
+            {
+                Debug.Log($"Tile {tilePos} has {hits.Length} collider(s)");
+            }
         }
     }
 }

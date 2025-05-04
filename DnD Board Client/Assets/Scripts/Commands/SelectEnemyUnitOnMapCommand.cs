@@ -1,14 +1,26 @@
-﻿using Scriptable_Objects.Units.BaseUnits;
+﻿using DefaultNamespace.TurnBasedScripts;
+using Scriptable_Objects.Units.BaseUnits;
 using UnityEngine;
 
 namespace DefaultNamespace.Commands
 {
     public class SelectEnemyUnitOnMapCommand : IUnitCommand
     {
-        public void Execute(GameObject unit)
+        public void Execute(GameObject unitObj)
         {
-            MapManager.MapManagerInstance.currentlySelectedUnit = unit;
-            MapUI.Instance.DisplayEnemyUnitInfo(unit.GetComponent<BaseUnitController>().BaseUnit as BaseUnit);
+            MapManager.MapManagerInstance.currentlySelectedUnit = unitObj;
+            var unit = unitObj.GetComponent<BaseUnitController>().BaseUnit as BaseUnit;
+            MapUI.Instance.DisplayEnemyUnitInfo(unit);
+            
+            Debug.Log(unitObj.name);
+            if (TurnBasedModeManager.Instance.GetCurrentTurn() == unitObj.name)
+            {
+                Debug.Log("It's your turn!");
+            }
+            else
+            {
+                Debug.Log("It's no turn!");
+            }
         }
     }
 }

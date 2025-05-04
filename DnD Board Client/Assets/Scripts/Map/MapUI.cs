@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using DataObjects.Adapters;
 using DataObjects.Units;
 using DefaultNamespace;
 using DefaultNamespace.CampaignSetup;
 using DefaultNamespace.Commands;
+using DefaultNamespace.TurnBasedScripts;
 using Map_Editor;
 using Map;
 using Newtonsoft.Json;
 using Scriptable_Objects.Units.BaseUnits;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +30,10 @@ public class MapUI : MonoBehaviour
     public GameObject UnitSelectionPanel;
     public GameObject EnemyUnitInfo;
     public GameObject PlayerUnitInfo;
+
+    public GameObject InitiativePanel;
+    private Dictionary<string, TMP_InputField> _unitInputFields = new();
+    public GameObject InitiativePrefab;
 
     public static MapUI Instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -64,6 +71,52 @@ public class MapUI : MonoBehaviour
         }
         
         MapSelection.RefreshShownValue();
+    }
+
+    public void DisplayInitiativePanel()
+    {
+        InitiativePanel.SetActive(true);
+        UnitSelectionPanel.SetActive(false);
+        foreach (var prefab in _unitInputFields.Values)
+        {
+            Destroy(prefab.transform.parent.gameObject);
+        }
+        _unitInputFields.Clear();
+        var units = new Dictionary<string, GameObject>();
+        units.AddRange(MapManager.MapManagerInstance.instantiatedEnemyUnits);
+        units.AddRange(MapManager.MapManagerInstance.instantiatedPlayerUnits);
+        foreach (var unit in units)
+        {
+            string unitName = unit.Key;
+            GameObject input = Instantiate(InitiativePrefab, InitiativePanel.transform);
+            var text = input.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = unit.Key;
+            var inputField = input.transform.Find("InitiativeInputField").GetComponent<TMP_InputField>();
+            _unitInputFields[unitName] = inputField;
+        }
+    }
+
+    public void OnInitiativeSubmit()
+    {
+        Dictionary<string, int> unitValues = new Dictionary<string, int>();
+
+        foreach (var kvp in _unitInputFields)
+        {
+            string unitName = kvp.Key;
+            TMP_InputField input = kvp.Value;
+
+            if (int.TryParse(input.text, out int value))
+            {
+                unitValues[unitName] = value;
+            }
+            else
+            {
+                Debug.LogWarning($"Invalid input for {unitName}");
+                unitValues[unitName] = 0; // or handle differently
+            }
+        }
+
+        TurnBasedModeManager.Instance.SetInitiative(unitValues);
+        TurnBasedModeManager.Instance.StartCombat();
     }
     public void DisplayPlayerUnitList()
     {

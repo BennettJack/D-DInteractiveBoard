@@ -34,5 +34,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
+  Neighbors: []
   position: {x: 0, y: 16, z: 0}
-  test: 
+  wallPrefab: {fileID: 5976111862671414949, guid: 7e53fb5a62ed6f04dbf810b8d97f4f0e, type: 3}

@@ -19,8 +19,6 @@ public class MapManager : MonoBehaviour
     public GameObject playerUnitContainer;
     public GameObject enemyUnitContainer;
     public GameObject currentlySelectedUnit;
-    public Dictionary<string, GameObject> placedEnemyUnits = new();
-    public Dictionary<string, GameObject> placedPlayerUnits = new();
     private Tile _previousTile;
     private string _currentlySelectedMapFileName;
     private Vector3Int _previousTilePosition;
@@ -30,8 +28,8 @@ public class MapManager : MonoBehaviour
 
     public GameObject unitPrefab;
 
-    public List<GameObject> instantiatedPlayerUnits;
-    public List<GameObject> instantiatedEnemyUnits;
+    public Dictionary<string, GameObject> instantiatedPlayerUnits = new();
+    public Dictionary<string, GameObject> instantiatedEnemyUnits = new();
     public MapData mapData;
     private Vector3 MouseWorldPosition;
     public float unitSelectDelayThreshold = 1f;
@@ -51,19 +49,11 @@ public class MapManager : MonoBehaviour
         
     }
     
-
     private Vector3 GetMouseWorldPosition()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var tileMapPos = _tileMapManager.tileMaps["ground"].WorldToCell(mouseWorldPos);
         return _tileMapManager.tileMaps["ground"].GetCellCenterWorld(tileMapPos);
-    }
-    private Tile GetTileAtMousePosition()
-    {
-        
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var tileMapPos = _tileMapManager.tileMaps["ground"].WorldToCell(mouseWorldPos);
-        return _tileMapManager.tileMaps["ground"].GetTile<Tile>(tileMapPos);
     }
 
     public void DestroySelectedUnit()
@@ -89,12 +79,7 @@ public class MapManager : MonoBehaviour
     {
         MapLoader.Instance.LoadMapFromFile(mapFileName);
     }
-
     
-    public void ChangeCurrentMap(string mapFileName)
-    {
-        
-    }
 
     public void SetUnitToPlace(string unitName)
     {
@@ -104,38 +89,46 @@ public class MapManager : MonoBehaviour
     private void PlaceUnit()
     {
         var unit = Instantiate(unitPrefab);
-        unit.name = unitToPlace.unitName;
-        unit.GetComponent<BaseUnitController>().BaseUnit = unitToPlace;
-
+        
+        var unitController = unit.GetComponent<BaseUnitController>();
+        unitController.BaseUnit = unitToPlace;
         unit.transform.localScale = new Vector3(mapData.TileWidth, mapData.TileHeight, 1);
         unit.gameObject.transform.position = MouseWorldPosition;
-
+        
+        
         if (CampaignManager.Instance.playerUnitNames.Contains(unitToPlace.unitName))
         {
-            unit.GetComponent<BaseUnitController>().namePlate.text = unitToPlace.unitName;
-            unit.GetComponent<BaseUnitController>().selectUnitOnMapCommand = new SelectPlayerUnitOnMapCommand();
-            instantiatedPlayerUnits.Add(unit);
+            unit.name = unitToPlace.unitName;
+            unitController.namePlate.text = unitToPlace.unitName;
+            unitController.selectUnitOnMapCommand = new SelectPlayerUnitOnMapCommand();
+            unit.transform.SetParent(playerUnitContainer.transform);
+            instantiatedPlayerUnits.Add(unit.name, unit);
             unitToPlace = null;
         }
         else if (CampaignManager.Instance.enemyUnitNames.Contains(unitToPlace.unitName))
         {
-            instantiatedEnemyUnits.Add(unit);
-            unit.GetComponent<BaseUnitController>().BodyRenderer.color = Color.red;
-            unit.GetComponent<BaseUnitController>().selectUnitOnMapCommand = new SelectEnemyUnitOnMapCommand();
-            var unitsWithName = instantiatedEnemyUnits.Count(u => u.GetComponent<BaseUnitController>().BaseUnit.unitName == unitToPlace.unitName);
+            
+            unitController.BodyRenderer.color = Color.red;
+            unitController.selectUnitOnMapCommand = new SelectEnemyUnitOnMapCommand();
+            unit.transform.SetParent(enemyUnitContainer.transform);
+            var unitsWithName = instantiatedEnemyUnits.Count(u => u.Value.GetComponent<BaseUnitController>().BaseUnit.unitName == unitToPlace.unitName);
             if (unitsWithName == 1)
             {
-                unit.GetComponent<BaseUnitController>().namePlate.text = unitToPlace.unitName;
+                unit.name = unitToPlace.unitName;
+                unitController.namePlate.text = unitToPlace.unitName;
             }
             else
             {
-                unit.GetComponent<BaseUnitController>().namePlate.text = $"{unitToPlace.unitName} {unitsWithName - 1}";
+                unit.name = $"{unitToPlace.unitName} {unitsWithName - 1}";
+                unitController.namePlate.text = $"{unitToPlace.unitName} {unitsWithName - 1}";
             }
+            
+            instantiatedEnemyUnits.Add(unit.name, unit);
         }
         
         
         //TEMP CODE
-        var test = MovementManager.Instance.GetReachableTiles(_tileMapManager.tileMaps["ground"].WorldToCell(unit.transform.position), 6);
+        //var test = MovementManager.Instance.GetReachableTiles(_tileMapManager.tileMaps["ground"].WorldToCell(unit.transform.position), 6);
     }
 }
 

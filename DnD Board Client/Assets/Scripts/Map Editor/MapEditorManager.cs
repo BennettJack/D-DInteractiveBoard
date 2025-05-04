@@ -1,9 +1,7 @@
 using System;
 using System.IO;
 using Map_Editor;
-using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class MapEditorManager : MonoBehaviour
 {
