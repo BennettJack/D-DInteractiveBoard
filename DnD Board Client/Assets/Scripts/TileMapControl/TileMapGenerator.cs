@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Map_Editor;
+using Map;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -32,9 +33,9 @@ namespace TileMapControl
         
         public Tilemap GenerateVisionTileMap(int width, int height, MapData mapData, Tilemap tileMap)
         {
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < width; i++)
             {
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < height; j++)
                 {
                     if (mapData.DiscoveredVisionTiles.FirstOrDefault(tile => tile.position == new Vector3Int(i, j, 0)) != null)
                     {
@@ -55,8 +56,19 @@ namespace TileMapControl
         }
         
         public void GenerateGroundTileMap(int width, int height, float tileWidth, float tileHeight){}
-        
-        public void GenerateGroundTileMap(int width, int height, float tileWidth, float tileHeight, MapData mapData){}
+
+        public void GenerateGroundTileMap(int width, int height)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    Debug.Log("Ground Tile Found");
+                    MapTileMapManager.MapTileMapManagerInstance.
+                        tileMaps["ground"].SetTile(new Vector3Int(i, j, 0), _tileGallery.GetTile("standardTerrain"));
+                }
+            }
+        }
         
         public void GenerateOverlayTileMap(int width, int height, float tileWidth, float tileHeight){}
         

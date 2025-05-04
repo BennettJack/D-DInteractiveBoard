@@ -6,6 +6,7 @@ using DataObjects.Units;
 using DefaultNamespace;
 using DefaultNamespace.CampaignSetup;
 using DefaultNamespace.Commands;
+using Map_Editor;
 using Map;
 using Newtonsoft.Json;
 using Scriptable_Objects.Units.BaseUnits;
@@ -90,6 +91,7 @@ public class MapUI : MonoBehaviour
         {
             var selectedMap = CampaignManager.Instance.mapFileNames[mapSelection.value - 1];
             _mapManager.LoadMapFromFile(selectedMap);
+            MapTileMapManager.MapTileMapManagerInstance.UpdateGroundTileMap();
         }
     }
 

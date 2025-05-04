@@ -36,7 +36,7 @@ namespace Map
 
             var bottomLeftCorner = mapSpriteRenderer.transform.TransformPoint(mapSpriteRenderer.sprite.bounds.min);
 
-            MapTileMapManager.MapTileMapManagerInstance.LoadFromData(mapData);
+            MapTileMapManager.MapTileMapManagerInstance.LoadFromData(mapData, "map");
             MapTileMapManager.MapTileMapManagerInstance.SnapToMapImage(bottomLeftCorner);
         }
     }

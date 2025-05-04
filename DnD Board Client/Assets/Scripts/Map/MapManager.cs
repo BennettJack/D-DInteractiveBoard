@@ -132,6 +132,10 @@ public class MapManager : MonoBehaviour
                 unit.GetComponent<BaseUnitController>().namePlate.text = $"{unitToPlace.unitName} {unitsWithName - 1}";
             }
         }
+        
+        
+        //TEMP CODE
+        MovementManager.Instance.HighlightTilesInRangeDijkstra(_tileMapManager.tileMaps["ground"].WorldToCell(unit.transform.position), 6);
     }
 }
 

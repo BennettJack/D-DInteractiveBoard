@@ -100,10 +100,6 @@ public class TileMapManager : MonoBehaviour
                         }
                     }
                 }
-                else if (tileSetName == "vision")
-                {
-                    
-                }
                 else
                 {
                     tileMaps[tileSetName].SetTile(new Vector3Int(j, i, 0), _tileGallery.GetTile("Preview"));
@@ -140,23 +136,14 @@ public class TileMapManager : MonoBehaviour
             }
         }
     }
-
-    public void ClearTileMap(TilemapTypes type)
-    {
-        Tilemap tileMap = null;
-        switch (type)
-        {
-            case TilemapTypes.Ground:
-                break;
-        }
-    }
+    
     protected void UpdateTileSize()
     {
         groundAndVisionGrid.transform.localScale = new Vector3(tileWidth, tileHeight, 0);
         wallGrid.transform.localScale = new Vector3(tileWidth / 2, tileHeight / 2, 0);
     }
     
-    public void LoadFromData(MapData mapData)
+    public void LoadFromData(MapData mapData, string sceneType)
     {
 
         this.tileHeight = mapData.TileHeight;
@@ -172,12 +159,15 @@ public class TileMapManager : MonoBehaviour
             tile.SetWallType(WallTile.WallType.FullCover);
             tile.colliderType = Tile.ColliderType.Grid;
         }
-        
-        //CreateNewTileSet("ground");
-        var testMap = _tileMapGenerator.GenerateVisionTileMap( verticalTileCount, horizontalTileCount, 
+
+        _tileMapGenerator.GenerateVisionTileMap(horizontalTileCount, verticalTileCount,
             mapData, tileMaps["vision"]);
+        //this is super jank, TODO - FIX
+        if (sceneType == "map")
+        {
+            _tileMapGenerator.GenerateGroundTileMap(horizontalTileCount, verticalTileCount);
+        }
         UpdateTileSize();
-        //SetNeighbours();
         
     }
     

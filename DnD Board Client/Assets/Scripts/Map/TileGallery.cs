@@ -24,6 +24,8 @@ public class TileGallery : MonoBehaviour
         _tiles.Add("FullVision", Resources.Load<VisionTile>("Tiles/VisionTiles/FullVision"));
         _tiles.Add("WallTile", Resources.Load<WallTile>("Tiles/WallTiles/WallTile"));
         _tiles.Add("MovementOverlay", Resources.Load<MovementTile>("Tiles/OverlayTiles/MovementOverlayTile"));
+        _tiles.Add("standardTerrain", Resources.Load<FloorTile>("Tiles/FloorTiles/StandardTerrain"));
+        _tiles.Add("difficultTerrain", Resources.Load<FloorTile>("Tiles/FloorTiles/DifficultTerrain"));
     }
 
     public CustomTileBase GetTile(string key)
