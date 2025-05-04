@@ -28,7 +28,7 @@ public class MapEditorUI : MonoBehaviour
     
     public void SelectMap()
     {
-        _mapEditorManager.SetMapImage("Maps/dotmm");
+        _mapEditorManager.SetMapImage("Maps/IMG_4164");
         SetTileCountButton.enabled = true;
     }
 

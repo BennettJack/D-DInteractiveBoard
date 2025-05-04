@@ -135,7 +135,7 @@ public class MapManager : MonoBehaviour
         
         
         //TEMP CODE
-        MovementManager.Instance.HighlightTilesInRangeDijkstra(_tileMapManager.tileMaps["ground"].WorldToCell(unit.transform.position), 6);
+        var test = MovementManager.Instance.GetReachableTiles(_tileMapManager.tileMaps["ground"].WorldToCell(unit.transform.position), 6);
     }
 }
 

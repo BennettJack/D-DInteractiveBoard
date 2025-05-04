@@ -110,7 +110,15 @@ public class MapEditorManager : MonoBehaviour
                 Debug.Log($"should be placing wall at {mousePosition}");
                 var wallType = WallTile.WallType.FullCover;
                 _tileMapManager.PlaceWallTile(mousePosition, wallType);
-            } 
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (_tileMapManager.tileMaps["wall"].HasTile(mousePosition))
+                {
+                    _tileMapManager.tileMaps["wall"].SetTile(mousePosition, null);
+                }
+            }
         }
         
     }

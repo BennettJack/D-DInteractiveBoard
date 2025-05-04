@@ -63,7 +63,6 @@ namespace TileMapControl
             {
                 for (int j = 0; j < height; j++)
                 {
-                    Debug.Log("Ground Tile Found");
                     MapTileMapManager.MapTileMapManagerInstance.
                         tileMaps["ground"].SetTile(new Vector3Int(i, j, 0), _tileGallery.GetTile("standardTerrain"));
                 }
