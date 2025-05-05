@@ -312,7 +312,7 @@ namespace Map
             //Size uses the tile size
             var hits = Physics2D.OverlapBoxAll(
                 bounds.center,
-                new Vector2(MapTileMapManager.MapTileMapManagerInstance.tileHeight, MapTileMapManager.MapTileMapManagerInstance.tileWidth) *0.8f,
+                new Vector2(MapTileMapManager.MapTileMapManagerInstance.tileHeight, MapTileMapManager.MapTileMapManagerInstance.tileWidth) *0.65f,
                 0f,
                 LayerMask.GetMask("Walls")
             );
