@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DataObjects.Units;
+using Map;
 using UnityEngine;
 
 namespace DefaultNamespace.TurnBasedScripts
@@ -13,7 +15,8 @@ namespace DefaultNamespace.TurnBasedScripts
         private int _currentInitiativeIndex;
         
         public UnitTurn UnitTurn;
-        
+        public GameObject endTurnButton;
+        public GameObject endCombatButton;
         public bool IsTurnBasedMode;
         private string _currentUnitName;
         
@@ -21,7 +24,19 @@ namespace DefaultNamespace.TurnBasedScripts
         {
             Instance = this;
         }
-        
+
+        private void Update()
+        {
+            if (IsTurnBasedMode && !endTurnButton.activeInHierarchy)
+            {
+                endCombatButton.SetActive(true);
+                endTurnButton.SetActive(true);
+            }
+            else if(!IsTurnBasedMode)
+            {
+                endCombatButton.SetActive(false);
+            }
+        }
 
         public void SetInitiative(Dictionary<string, int> initiativeRolls)
         {
@@ -44,7 +59,12 @@ namespace DefaultNamespace.TurnBasedScripts
         {
             UnitTurn = new UnitTurn(unitName);
             _currentUnitName = unitName;
-            Debug.Log($"starting turn: {unitName}");
+            Debug.Log($"Starting turn: {unitName}");
+            var startTile = MapManager.MapManagerInstance.GetUnitPosition(unitName);
+            Debug.Log($"we are at {startTile}");
+            MovementManager.Instance.ClearData();
+            MovementManager.Instance.ClearOverlayTiles();
+            MovementManager.Instance.BeginPlayerMovement(startTile);
         }
         public void EndTurn()
         {
@@ -65,10 +85,17 @@ namespace DefaultNamespace.TurnBasedScripts
         public void EndTurnBasedMode()
         {
             _initiative.Clear();
+            endTurnButton.SetActive(false);
             UnitTurn = null;
             _currentUnitName = null;
             _currentInitiativeIndex = 0;
             IsTurnBasedMode = false;
+        }
+
+        public void RemoveUnitFromInitiative(string unitName)
+        {
+           var unit = _initiative.FirstOrDefault(unit => unit.Key == unitName);
+           _initiative.Remove(unit);
         }
     }
 }

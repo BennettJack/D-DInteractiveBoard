@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using DataObjects.Units;
+using DefaultNamespace.TurnBasedScripts;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,10 +10,15 @@ namespace Map
     public class MovementManager : MonoBehaviour
     {
         public static MovementManager Instance;
-        private List<GameObject> _highlightedTiles = new();
+        private List<Vector3Int> _highlightedTiles = new();
         private Tilemap _groundTilemap;
         private Tilemap _overlayTilemap;
         private Tilemap _wallTilemap;
+
+        public GameObject forceMoveBtn;
+        public GameObject cancelForceMoveBtn;
+
+        private bool _forceMoveMode;
         
         void Awake()
         {
@@ -23,9 +30,186 @@ namespace Map
             _groundTilemap = MapTileMapManager.MapTileMapManagerInstance.tileMaps["ground"];
             _overlayTilemap = MapTileMapManager.MapTileMapManagerInstance.tileMaps["overlay"];
         }
+        private Vector3Int _startingTile;
+        private Dictionary<Vector3Int, int> _reachableTiles = new();
+        private Vector3Int _currentTile;
+        private bool _awaitingInput = false;
+
+        private void Update()
+        {
+            if (!MapManager.MapManagerInstance.currentlySelectedUnit)
+            {
+                forceMoveBtn.SetActive(false);
+                cancelForceMoveBtn.SetActive(false);
+            }
+            else
+            {
+                if (_forceMoveMode)
+                {
+                    forceMoveBtn.SetActive(false);
+                    cancelForceMoveBtn.SetActive(true);
+
+                    if (Input.GetMouseButtonDown(1))
+                    {
+                        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                        var tileMapPos = MapTileMapManager.MapTileMapManagerInstance.tileMaps["ground"].WorldToCell(mouseWorldPos);
+                        var center = MapTileMapManager.MapTileMapManagerInstance.tileMaps["ground"].GetCellCenterWorld(tileMapPos);
+                        MapManager.MapManagerInstance.currentlySelectedUnit.transform.position = center;
+
+                        if (TurnBasedModeManager.Instance.IsTurnBasedMode)
+                        {
+                            _currentTile = tileMapPos;
+                            int remaining = TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed;
+                            _reachableTiles = GetReachableTiles(_currentTile, remaining);
+                        }
+                    }
+                }
+                else
+                {
+                    forceMoveBtn.SetActive(true);
+                    cancelForceMoveBtn.SetActive(false);
+                }
+            }
+            
+            
+            if (!TurnBasedModeManager.Instance.IsTurnBasedMode)
+                return;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3Int clickedTile = _groundTilemap.WorldToCell(mouseWorld);
+                HighlightPathTile(clickedTile);
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3Int clickedTile = _groundTilemap.WorldToCell(mouseWorld);
+                RemoveHighlightPathTile(clickedTile);
+            }
+        }
+
+        public void EnableForceMoveMode()
+        {
+            _forceMoveMode = true;
+        }
+
+        public void DisableForceMoveMode()
+        {
+            _forceMoveMode = false;
+        }
+        public void ClearData()
+        {
+            _highlightedTiles.Clear();
+            
+        }
+
+        public void ForceMove()
+        {
+            
+        }
+        public void BeginPlayerMovement(Vector3Int startTile)
+        {
+            _currentTile = startTile;
+            _awaitingInput = true;
+            _startingTile = startTile;
+
+            int remaining = TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed;
+            _reachableTiles = GetReachableTiles(_currentTile, remaining);
+        }
+
+        private void RemoveHighlightPathTile(Vector3Int clicked)
+        {
+            if (_highlightedTiles.Count == 0)
+                return;
+
+            Vector3Int lastTile = _highlightedTiles[^1]; // last tile in list
+
+            if (clicked != lastTile)
+            {
+                Debug.Log("You can only undo the last tile in the path.");
+                return;
+            }
+
+            RefundLastStep();
+        }
         
+        private void RefundLastStep()
+        {
+            if (_highlightedTiles.Count == 0)
+                return;
+
+            Vector3Int lastTile = _highlightedTiles[^1]; // get last tile
+            _highlightedTiles.RemoveAt(_highlightedTiles.Count - 1); // remove from path
+
+            int costToRefund = _groundTilemap.GetTile<FloorTile>(lastTile).MovementCost;
+            TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed += costToRefund;
+            Debug.Log($"Refunded {costToRefund} movement from tile {lastTile}");
+
+            // Update current tile to new last tile, or starting tile if path is empty
+            _currentTile = _highlightedTiles.Count > 0 ? _highlightedTiles[^1] : _startingTile;
+
+            ClearOverlayTiles();
+
+            // Recalculate reachable tiles from the new current tile
+            if (TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed > 0)
+            {
+                _reachableTiles = GetReachableTiles(_currentTile, TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed);
+            }
+
+            // Re-highlight the path
+            foreach (var tile in _highlightedTiles)
+            {
+                _overlayTilemap.SetTile(tile, TileGallery.TileGalleryInstance.GetTile("SelectedOverlay"));
+            }
+            
+            MapManager.MapManagerInstance.MoveUnit(_overlayTilemap.GetCellCenterWorld(_currentTile), 
+                TurnBasedModeManager.Instance.GetCurrentTurn());
+        }
+        private void HighlightPathTile(Vector3Int clicked)
+        {
+            if (!_reachableTiles.ContainsKey(clicked)) return;
+            if (!GetNeighbours(_currentTile).Contains(clicked)) return;
+            
+            int moveCost = _reachableTiles[clicked];
+            if (moveCost > TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed) return;
+
+            var selectedTile = _groundTilemap.WorldToCell(clicked);
+            _highlightedTiles.Add(clicked);
+
+            TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed -= moveCost;
+            _currentTile = clicked;
+
+            // Recalculate remaining reachable tiles
+            ClearOverlayTiles();
+            if (TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed > 0)
+            {
+                _reachableTiles = GetReachableTiles(_currentTile, TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed);
+            }
+            
+            foreach (var tile in _highlightedTiles)
+            {
+                _overlayTilemap.SetTile(tile, TileGallery.TileGalleryInstance.GetTile("SelectedOverlay"));
+            }
+            
+      
+
+            var temp = MapManager.MapManagerInstance.allInstntiatedUnits;
+            foreach (var unitB in temp)
+            {
+                Debug.Log(unitB.Key);
+            }
+            
+            MapManager.MapManagerInstance.MoveUnit(_overlayTilemap.GetCellCenterWorld(_currentTile), 
+                TurnBasedModeManager.Instance.GetCurrentTurn());
+            
+        }
         
-        
+        public void ClearOverlayTiles()
+        {
+            _overlayTilemap.ClearAllTiles(); // Or only clear MovementOverlay tiles if needed
+        }
         
         //Using Dijkstra's algorithm to check what tiles can be accessed
         public Dictionary<Vector3Int, int> GetReachableTiles(Vector3Int start, int maxCost)
@@ -52,7 +236,11 @@ namespace Map
 
                 if (currentCost != 0)
                 {
-                    _overlayTilemap.SetTile(current, TileGallery.TileGalleryInstance.GetTile("MovementOverlay"));
+                    if (!_overlayTilemap.HasTile(current))
+                    {
+                        _overlayTilemap.SetTile(current, TileGallery.TileGalleryInstance.GetTile("MovementOverlay"));
+                    }
+                    
                 }
 
                 foreach (Vector3Int neighbour in GetNeighbours(current))
@@ -86,7 +274,6 @@ namespace Map
 
             return costMap;
         }
-        
         
         //Gets the positions of neighbours
         List<Vector3Int> GetNeighbours(Vector3Int position)

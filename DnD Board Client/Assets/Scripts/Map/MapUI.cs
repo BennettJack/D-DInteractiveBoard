@@ -31,6 +31,7 @@ public class MapUI : MonoBehaviour
     public GameObject EnemyUnitInfo;
     public GameObject PlayerUnitInfo;
 
+    public GameObject initiativeButton;
     public GameObject InitiativePanel;
     private Dictionary<string, TMP_InputField> _unitInputFields = new();
     public GameObject InitiativePrefab;
@@ -56,7 +57,14 @@ public class MapUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        if (TurnBasedModeManager.Instance.IsTurnBasedMode)
+        {
+            initiativeButton.SetActive(false);
+        }
+        else
+        {
+            initiativeButton.SetActive(true);
+        }
     }
 
     public void PopulateMapsDropDown(List<string> maps)
@@ -77,6 +85,8 @@ public class MapUI : MonoBehaviour
     {
         InitiativePanel.SetActive(true);
         UnitSelectionPanel.SetActive(false);
+        PlayerUnitInfo.SetActive(false);
+        EnemyUnitInfo.SetActive(false);
         foreach (var prefab in _unitInputFields.Values)
         {
             Destroy(prefab.transform.parent.gameObject);
@@ -121,6 +131,7 @@ public class MapUI : MonoBehaviour
     public void DisplayPlayerUnitList()
     {
         UnitSelectionPanel.SetActive(true);
+        InitiativePanel.SetActive(false);
         var controller = UnitSelectionPanel.GetComponent<UnitSelectorController>();
         var playerUnits = UnitManager.UnitManagerInstance.GetUnitByName(CampaignManager.Instance.playerUnitNames);
         var adaptedData = playerUnits.Select(u => (ICardData)new UnitDataCardAdapter(u)).ToList();
@@ -129,7 +140,7 @@ public class MapUI : MonoBehaviour
     }
     public void DisplayEnemyUnitsList()
     {
-        
+        InitiativePanel.SetActive(false);
         UnitSelectionPanel.SetActive(true);
         var controller = UnitSelectionPanel.GetComponent<UnitSelectorController>();
         var enemyUnits = UnitManager.UnitManagerInstance.GetUnitByName(CampaignManager.Instance.enemyUnitNames);
@@ -150,6 +161,7 @@ public class MapUI : MonoBehaviour
 
     public void DisplayPlayerUnitInfo(BaseUnit selectedUnit)
     {
+        InitiativePanel.SetActive(false);
         if (UnitSelectionPanel.activeSelf)
         {
             UnitSelectionPanel.SetActive(false);
@@ -166,6 +178,7 @@ public class MapUI : MonoBehaviour
 
     public void DisplayEnemyUnitInfo(BaseUnit selectedUnit)
     {
+        InitiativePanel.SetActive(false);
         if (UnitSelectionPanel.activeSelf)
         {
             UnitSelectionPanel.SetActive(false);

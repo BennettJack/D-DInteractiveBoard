@@ -5,9 +5,11 @@ using System.Linq;
 using DataObjects.Units;
 using DefaultNamespace;
 using DefaultNamespace.Commands;
+using DefaultNamespace.TurnBasedScripts;
 using Map;
 using Scriptable_Objects.Units.BaseUnits;
 using Scriptable_Objects.Units.BaseUnits.Classes;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -30,10 +32,9 @@ public class MapManager : MonoBehaviour
 
     public Dictionary<string, GameObject> instantiatedPlayerUnits = new();
     public Dictionary<string, GameObject> instantiatedEnemyUnits = new();
+    public Dictionary<string, GameObject> allInstntiatedUnits = new();
     public MapData mapData;
     private Vector3 MouseWorldPosition;
-    public float unitSelectDelayThreshold = 1f;
-    public float unitSelectDelay = 0f;
     
     private MapData _currentMapData;
     public void Awake()
@@ -56,21 +57,49 @@ public class MapManager : MonoBehaviour
         return _tileMapManager.tileMaps["ground"].GetCellCenterWorld(tileMapPos);
     }
 
+    public Vector3Int GetUnitPosition(string unitName)
+    {
+        var units = new Dictionary<string, GameObject>();
+        units.AddRange(instantiatedEnemyUnits);
+        units.AddRange(instantiatedPlayerUnits);
+        
+        return _tileMapManager.tileMaps["ground"].WorldToCell(units[unitName].transform.position);
+    }
+
+    public void MoveUnit(Vector3 position, string unitName)
+    {
+        allInstntiatedUnits.TryGetValue(unitName, out var unit);
+        if (!unit) return;
+        
+        unit.transform.position = position;
+        
+        
+    }
     public void DestroySelectedUnit()
     {
+        if(!currentlySelectedUnit) return;
+        
         Destroy(currentlySelectedUnit);
+        instantiatedPlayerUnits.Remove(currentlySelectedUnit.name);
+        instantiatedEnemyUnits.Remove(currentlySelectedUnit.name);
+
+        if (TurnBasedModeManager.Instance.IsTurnBasedMode)
+        {
+            TurnBasedModeManager.Instance.RemoveUnitFromInitiative(currentlySelectedUnit.name);
+        };
     }
     private void Update()
     {
-        if (unitSelectDelay < unitSelectDelayThreshold)
-        {
-            unitSelectDelay += Time.deltaTime;
-        }
 
         MouseWorldPosition = GetMouseWorldPosition();
         if (Input.GetMouseButtonDown(1) && unitToPlace is not null)
         {
             PlaceUnit();
+        }
+
+        foreach (var player in instantiatedPlayerUnits)
+        {
+            VisionManager.Instance.ClearVision(player.Value.transform.position);    
         }
         
     }
@@ -112,20 +141,21 @@ public class MapManager : MonoBehaviour
             unitController.selectUnitOnMapCommand = new SelectEnemyUnitOnMapCommand();
             unit.transform.SetParent(enemyUnitContainer.transform);
             var unitsWithName = instantiatedEnemyUnits.Count(u => u.Value.GetComponent<BaseUnitController>().BaseUnit.unitName == unitToPlace.unitName);
-            if (unitsWithName == 1)
+            if (unitsWithName == 0)
             {
                 unit.name = unitToPlace.unitName;
                 unitController.namePlate.text = unitToPlace.unitName;
             }
             else
             {
-                unit.name = $"{unitToPlace.unitName} {unitsWithName - 1}";
-                unitController.namePlate.text = $"{unitToPlace.unitName} {unitsWithName - 1}";
+                unit.name = $"{unitToPlace.unitName} {unitsWithName + 1}";
+                unitController.namePlate.text = $"{unitToPlace.unitName} {unitsWithName + 1}";
             }
             
             instantiatedEnemyUnits.Add(unit.name, unit);
+            unitToPlace = null;
         }
-        
+        allInstntiatedUnits.Add(unit.name, unit);
         
         //TEMP CODE
         //var test = MovementManager.Instance.GetReachableTiles(_tileMapManager.tileMaps["ground"].WorldToCell(unit.transform.position), 6);
