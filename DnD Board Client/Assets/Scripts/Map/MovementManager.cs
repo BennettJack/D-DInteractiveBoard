@@ -105,17 +105,13 @@ namespace Map
             
         }
 
-        public void ForceMove()
-        {
-            
-        }
         public void BeginPlayerMovement(Vector3Int startTile)
         {
             _currentTile = startTile;
             _awaitingInput = true;
             _startingTile = startTile;
 
-            int remaining = TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed;
+            var remaining = TurnBasedModeManager.Instance.UnitTurn.RemainingMovementSpeed;
             _reachableTiles = GetReachableTiles(_currentTile, remaining);
         }
 
@@ -212,7 +208,7 @@ namespace Map
         }
         
         //Using Dijkstra's algorithm to check what tiles can be accessed
-        public Dictionary<Vector3Int, int> GetReachableTiles(Vector3Int start, int maxCost)
+        private Dictionary<Vector3Int, int> GetReachableTiles(Vector3Int start, int maxCost)
         {
             //Stores locations nd their costs
             var costMap = new Dictionary<Vector3Int, int>();
@@ -229,7 +225,7 @@ namespace Map
                 if (visited.Contains(current)) continue;
 
                 visited.Add(current);
-                int currentCost = costMap[current];
+                var currentCost = costMap[current];
 
                 if (!IsValidGroundTile(current))
                     continue;

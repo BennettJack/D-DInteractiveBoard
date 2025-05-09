@@ -28,7 +28,7 @@ namespace DataObjects.Units
         
         public static IBaseUnit CreateUnit(JObject unitJson)
         {
-            string unitTypeName = unitJson["unitType"]?.ToString();
+            var unitTypeName = unitJson["unitType"]?.ToString();
             if (string.IsNullOrEmpty(unitTypeName))
             {
                 Debug.LogWarning("data does not have unit type defined");
@@ -39,12 +39,9 @@ namespace DataObjects.Units
             {
                 return (IBaseUnit)unitJson.ToObject(unitType);
             }
+            Debug.LogWarning($"unit type {unitTypeName} is not registered"); 
+            return null;
 
-            else
-            {
-                Debug.LogWarning($"unit type {unitTypeName} is not registered");
-                return null;
-            }
         }
     }
 }
